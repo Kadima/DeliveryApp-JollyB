@@ -75,7 +75,7 @@ if (dbTms) {
   dbTms.transaction(function(tx) {
     dbSql = 'DROP TABLE if exists Csbk1_Accept';
     tx.executeSql(dbSql, [], null, dbError);
-    dbSql = "CREATE TABLE Csbk1_Accept (TrxNo INT,BookingNo TEXT, JobNo TEXT, StatusCode TEXT,BookingCustomerCode TEXT,Pcs INT,CollectionTimeStart TEXT,CollectionTimeEnd TEXT,PostalCode TEXT,BusinessPartyCode TEXT,BusinessPartyName TEXT,Address1 TEXT,Address2 TEXT,Address3 TEXT,Address4 TEXT,CompletedFlag TEXT,TimeFrom TEXT,TimeTo TEXT,ColTimeFrom TEXT,ColTimeTo TEXT)";
+    dbSql = "CREATE TABLE Csbk1_Accept (TrxNo INT,BookingNo TEXT, JobNo TEXT, StatusCode TEXT,BookingCustomerCode TEXT,Pcs INT,CollectionTimeStart TEXT,CollectionTimeEnd TEXT,PostalCode TEXT,BusinessPartyCode TEXT,BusinessPartyName TEXT,Address1 TEXT,Address2 TEXT,Address3 TEXT,Address4 TEXT,CompletedFlag TEXT,TimeFrom TEXT,TimeTo TEXT,ColTimeFrom TEXT,ColTimeTo TEXT,ScanDate TEXT)";
     tx.executeSql(dbSql, [], null, dbError);
   });
   dbTms.transaction(function(tx) {
@@ -96,7 +96,15 @@ var db_del_Csbk1_Accept = function() {
   if (dbTms) {
     dbTms.transaction(function(tx) {
       dbSql = 'Delete from Csbk1_Accept';
-      tx.executeSql(dbsql, [], null, dbError)
+      tx.executeSql(dbSql, [], null, dbError)
+    });
+  }
+}
+var db_del_Csbk1_Accept_detail = function(bookingNo) {
+  if (dbTms) {
+    dbTms.transaction(function(tx) {
+      dbSql = "Delete from Csbk1_Accept where BookingNo='"+bookingNo+"'";
+      tx.executeSql(dbSql, [], null, dbError)
     });
   }
 }
@@ -104,8 +112,8 @@ var db_add_Csbk1_Accept = function(Csbk1) {
   if (dbTms) {
     dbTms.transaction(function(tx) {
       Csbk1 = repalceObj(Csbk1);
-      dbSql = 'INSERT INTO Csbk1_Accept(TrxNo,BookingNo,JobNo,StatusCode,BookingCustomerCode,Pcs,CollectionTimeStart,CollectionTimeEnd,PostalCode,BusinessPartyCode,BusinessPartyName,Address1,Address2,Address3,Address4,CompletedFlag,TimeFrom,TimeTo,ColTimeFrom,ColTimeTo) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-      tx.executeSql(dbSql, [Csbk1.TrxNo,Csbk1.BookingNo, Csbk1.JobNo, Csbk1.StatusCode, Csbk1.BookingCustomerCode, Csbk1.Pcs, Csbk1.CollectionTimeStart, Csbk1.CollectionTimeEnd, Csbk1.PostalCode, Csbk1.BusinessPartyCode,Csbk1.BusinessPartyName, Csbk1.Address1, Csbk1.Address2, Csbk1.Address3, Csbk1.Address4,Csbk1.CompletedFlag,Csbk1.TimeFrom,Csbk1.TimeTo,Csbk1.ColTimeFrom,Csbk1.ColTimeTo], null, dbError);
+      dbSql = 'INSERT INTO Csbk1_Accept(TrxNo,BookingNo,JobNo,StatusCode,BookingCustomerCode,Pcs,CollectionTimeStart,CollectionTimeEnd,PostalCode,BusinessPartyCode,BusinessPartyName,Address1,Address2,Address3,Address4,CompletedFlag,TimeFrom,TimeTo,ColTimeFrom,ColTimeTo,ScanDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+      tx.executeSql(dbSql, [Csbk1.TrxNo,Csbk1.BookingNo, Csbk1.JobNo, Csbk1.StatusCode, Csbk1.BookingCustomerCode, Csbk1.Pcs, Csbk1.CollectionTimeStart, Csbk1.CollectionTimeEnd, Csbk1.PostalCode, Csbk1.BusinessPartyCode,Csbk1.BusinessPartyName, Csbk1.Address1, Csbk1.Address2, Csbk1.Address3, Csbk1.Address4,Csbk1.CompletedFlag,Csbk1.TimeFrom,Csbk1.TimeTo,Csbk1.ColTimeFrom,Csbk1.ColTimeTo,Csbk1.ScanDate], null, dbError);
   });
   }
 }

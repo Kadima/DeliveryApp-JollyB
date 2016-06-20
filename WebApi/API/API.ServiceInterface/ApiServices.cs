@@ -65,6 +65,20 @@ namespace WebApi.ServiceInterface
             return ecr;
         }
 
+        public ServiceModel.TMS.Rcbp_Logic tms_rcbp_Logic { get; set; }
+        public object Any(ServiceModel.TMS.Rcbp request)
+        {
+            CommonResponse ecr = new CommonResponse();
+            ecr.initial();
+            try
+            {
+                ServiceInterface.TMS.TableService ts = new ServiceInterface.TMS.TableService();
+                ts.TS_Rcbp(auth, request, tms_rcbp_Logic, ecr, this.Request.Headers.GetValues("Signature"), this.Request.RawUrl);
+            }
+            catch (Exception ex) { cr(ecr, ex); }
+            return ecr;
+        }
+
 
 
         public ServiceModel.TMS.UploadImg_Logic uploadImg_Logic { get; set; }

@@ -32,10 +32,11 @@ namespace WebApi.ServiceModel.Tables
         public decimal DepositAmt { get; set; }
         public decimal DiscountAmt { get; set; }
         public int ItemNo { get; set; }
+        public decimal PaidAmt { get; set; }
+        public string ScanDate  { get; set; }
 
 
 
 
-
-    }
+}
 }

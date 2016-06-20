@@ -11,29 +11,32 @@
   <ion-content>
     <div style="height: 43px;"></div>
     <div class="list">
-      <ion-item class="item" ng-repeat="job in jobs" ng-click="gotoDetail(job)" ng-class="{'s-green': job.status.success, 's-red': job.status.failed}">
-        <div class="row" >
-          <div class="col col-40">
-            <p><span ng-bind="job.action"></span>&nbsp;&nbsp;<span ng-bind="job.amt"></span></p>
-            <p><span ng-bind="job.time"></span></p>
-            <p><span ng-bind="job.code"></span></p>
+      <ion-list can-swipe="true" tabindex="-1" id="div-list">
+        <ion-item nav-clear menu-close class="item item-icon-right" ng-repeat="job in jobs" ng-click="gotoDetail(job)">
+          <div class="row" ng-class="{'s-green': job.status.success, 's-red': job.status.failed}">
+            <div class="col col-40">
+              <p><span ng-bind="job.action"></span>&nbsp;&nbsp;<span ng-bind="job.amt"></span></p>
+              <p><span ng-bind="job.time"></span></p>
+              <p><span ng-bind="job.code"></span></p>
+            </div>
+            <div class="col col-40">
+              <p><span ng-bind="job.customer.name"></span></p>
+              <textarea wrap="hard"  ng-model="job.customer.address"  rows="4" ng-class="{'s-green': job.status.success, 's-red': job.status.failed}">
+              </textarea>
+            </div>
+            <div class="col col-10">
+                <i class="icon ion-android-done" ng-if="job.status.success" style="color:#000;right:22px;"></i>
+                <i class="icon ion-android-refresh" ng-if="job.status.inprocess" style="color:#000;right:22px;"></i>
+              </div>
+           <div class="col col-10">
+               <i class="icon ion-android-arrow-dropleft" style="color:#000;right:2px;"></i>
+            </div>
           </div>
-          <div class="col col-50" >
-            <p><span ng-bind="job.customer.name"></span>11                    </p>
-            <p><span ng-bind="job.customer.address"  ></span></p>
-
-          </div>
-          <div class="col col-10">
-            <p>
-              &nbsp;
-            </p>
-            <p>
-              <i class="icon ion-android-done" ng-if="job.status.success"></i>
-              <i class="icon ion-android-refresh" ng-if="job.status.inprocess"></i>
-            </p>
-          </div>
-        </div>
-         </ion-item>
+          <ion-option-button class="button-assertive" ng-click="deleteCsbk1($index,job)">
+            <i class="icon ion-android-delete"></i>
+          </ion-option-button>
+        </ion-item>
+      </ion-list>
     </div>
     <div ng-if="jobs !== undefined && !jobs.length" class="item">
       <h2><i class="iconfont icon-address4"></i>&nbsp;&nbsp;<span>No Results</span></h2>

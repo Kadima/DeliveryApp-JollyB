@@ -6,12 +6,14 @@ ion-content {
 }
 .s-green {
     background-color: #009900;
+    color : #fff;
 }
 .s-green p {
     color : #fff;
 }
 .s-red {
     background-color: #ff3333;
+      color : #fff;
 }
 .s-red p {
     color : #fff;

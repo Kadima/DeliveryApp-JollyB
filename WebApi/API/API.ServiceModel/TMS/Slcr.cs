@@ -153,6 +153,16 @@ namespace WebApi.ServiceModel.TMS
 
                         }
 
+                                 Result = db.Update<Csbk1>(
+                                    new
+                                    {
+                                   
+                                        DepositAmt = Convert.ToDecimal(0),
+                                        PaidAmt= Convert.ToDecimal(request.CashAmt)
+
+                                    },
+                                    p => p.BookingNo == request.BookingNo
+                    );
 
 
 

@@ -71,6 +71,26 @@ namespace WebApi.ServiceInterface.TMS
             }
         }
 
+
+        public void TS_Rcbp(Auth auth, Rcbp request, Rcbp_Logic rcbp_logic, CommonResponse ecr, string[] token, string uri)
+        {
+            if (auth.AuthResult(token, uri))
+            {
+                if (uri.IndexOf("/tms/rcbp1") > 0)
+                {
+                    ecr.data.results = rcbp_logic.Get_rcbp1_List(request);
+                }
+                ecr.meta.code = 200;
+                ecr.meta.message = "OK";
+            }
+            else
+            {
+                ecr.meta.code = 401;
+                ecr.meta.message = "Unauthorized";
+            }
+        }
+
+
         public void DownLoadImg(Auth auth, DownLoadImg request, DownLoadImg_Logic logic, CommonResponse ecr, string[] token, string uri)
         {
             if (auth.AuthResult(token, uri))

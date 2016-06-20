@@ -82,6 +82,7 @@
     <Compile Include="CommonResponse.cs" />
     <Compile Include="ConfigInterface.cs" />
     <Compile Include="Tables\Csbk1_with_Csbk2.cs" />
+    <Compile Include="Tables\Rcbp1.cs" />
     <Compile Include="Tables\Saco1.cs" />
     <Compile Include="Tables\Csbk1.cs" />
     <Compile Include="Tables\Csbk2.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Tables\Todr1.cs" />
     <Compile Include="Tables\View_Attach.cs" />
     <Compile Include="TMS\DownLoadImg.cs" />
+    <Compile Include="TMS\Rcbp.cs" />
     <Compile Include="TMS\Slcr.cs" />
     <Compile Include="TMS\Tms_Login.cs" />
     <Compile Include="TMS\Csbk.cs" />

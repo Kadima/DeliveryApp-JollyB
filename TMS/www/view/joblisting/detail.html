@@ -9,7 +9,7 @@
     <div style="height: 43px;"></div>
     <div class="card" id="iCard" style="overflow-y:auto">
       <div class="button-bar">
-        <a class="button" ng-href="tel:08605925888865">
+        <a class="button" ng-href="{{Detail.PhoneNumber}}">
                     CALL
                 </a>
         <!-- <button class="button" ng-click="showActionSheet()">
@@ -18,7 +18,7 @@
         <button class="button">
           MAP
         </button>
-        <button class="button">
+        <button class="button"  ng-click="capturePhoto()">
           CAMERA
         </button>
       </div>
@@ -27,34 +27,41 @@
         <label class="item-input-wrapper">
           <!-- style="font-weight:bold;" -->
           <label>Box No: </label>
-          <input type="text" placeholder="Box No" ng-model="Detail.csbk1.ItemNo" ng-readonly="true">
+          <input type="text" placeholder="Box No" style="height:25px;" ng-model="Detail.csbk1.ItemNo" ng-readonly="true">
         </label>
         <button class="button icon ion-android-refresh">
         </button>
       </div>
       <div class="row item item-divider">
-        <div class="col">
-          Box Size
+        <div class="col col-40">
+          Box Description
         </div>
-        <div class="col">
-          No Of Boxes
+        <div class="col col-20">
+      &nbsp  QTY
         </div>
-        <div class="col">
+        <div class="col col-25">
           Collected
         </div>
+        <div class="col col-15">
+          ADD
+        </div>
       </div>
-      <div class="item item-text-wrap" id="idivCsbk2" style="margin-top: 0px">
-        <ion-item class="item" ng-repeat="Csbk2 in Detail.csbk2s" style="margin-top: 0px">
-          <div class="row" style="height:1px;style="margin-top: 0px"">
+      <div class="item item-text-wrap" id="idivCsbk2" style="padding: 2px">
+        <ion-item class="item" ng-repeat="Csbk2 in Detail.csbk2s" style="padding: 2px">
+          <div class="row" >
   <!-- <div class="row" style="height:0px;"> -->
-            <div class="col" style="height:1px;">
-              <p><span ng-bind="Csbk2.BoxCode"></span></p>
+            <div class="col col-40" >
+              <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span ng-bind="Csbk2.BoxCode"></span></p>
             </div>
-            <div class="col" style="height:1px;">
-              <p><span ng-bind="Csbk2.Pcs"></span></p>
+            <div class="col col-20" >
+             <p>  &nbsp <span ng-bind="Csbk2.Pcs"></span></p>
             </div>
-            <div class="col-20" style="height:1px;">
-              <input type="text" id="iCollectedPcs" style="height:30px;" ng-model="Csbk2.CollectedPcs">
+            <div class="col col-25" >
+            <input type="text" id="iCollectedPcs" style="height:20px;"   ng-model="Csbk2.CollectedPcs">
+            </div>
+            <div class="col col-15" >
+                <!-- <p><span ng-bind=""></span></p>
+              <input type="text" id="iCollectedPcs"  ng-model="Csbk2.CollectedPcs"> -->
             </div>
           </div>
         </ion-item>

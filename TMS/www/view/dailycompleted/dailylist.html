@@ -22,17 +22,22 @@
             </label>
             <!-- <input type="text" id="txt-bookingno" ng-model="Search.CompletedDate" style="padding-right: 14px;" ng-readonly="true"> -->
           </div>
-          <div class="col col-50">
-            <ui-select ng-model="allCompletedDate.selected" theme="bootstrap" reset-search-input="true">
+
+
+          <div class="col col-40">
+              <button class="button button-clear button-small" ng-click="OnDatePicker()">{{Search.CompletedDate}}</button>
+          </div>
+
+          <!-- <div class="col col-10">
+            <ui-select ng-model="allCompletedDate.selected" theme="bootstrap" reset-search-input="true" on-select="ShowDailyCompleted(allCompletedDate.selected.CompletedDate)">
             <ui-select-match allow-clear="true" placeholder="Enter to search..." style="overflow:hidden;">
-           <span ng-bind="$select.selected.CompletedDate"></span>
+             {{$select.selected.CompletedDate}}
             </ui-select-match>
-              <ui-select-choices repeat="allCompletedDate in Search.allCompletedDates" refresh-delay="0" position="down">
+              <ui-select-choices repeat="allCompletedDate in Search.allCompletedDates track by $index"  refresh="refreshCompleteDate($select.search)" refresh-delay="0" position="down">
                 <div ng-bind="allCompletedDate.CompletedDate"></div>
               </ui-select-choices>
             </ui-select>
-
-          </div>
+          </div> -->
 
           <!-- <div class="col col-10">
                         <button class="button button-clear button-small" ng-click="openCam()"><i class="icon ion-qr-scanner"></i></button>
@@ -46,8 +51,11 @@
   </ion-pane>
   <ion-content style="margin-top:110px;">
     <ion-list tabindex="-1" id="div-list">
-      <ion-item class="item" ng-repeat="job in jobs" ng-click="gotoDetail(job)">
-        <div class="row">
+      <ion-item class="item" ng-repeat="Csbk1 in Csbk1s" >
+        <p style="font-size:0.8em;">BookingNo&nbsp;&nbsp;:&nbsp;&nbsp;<span ng-bind="Csbk1.bookingno" style="font-size:1.3em;"></span></p>
+        <p style="font-size:0.8em;">JobNo&nbsp;&nbsp;:&nbsp;&nbsp;<span ng-bind="Csbk1.JobNo" style="font-size:1.1em;"></span></p>
+        <p style="font-size:0.8em;">Amt&nbsp;&nbsp;:&nbsp;&nbsp;<span ng-bind="Csbk1.CollectedAmt" style="font-size:1.1em;"></span></p>
+        <!-- <div class="row">
           <div class="col col-40">
             <p><span ng-bind="job.bookingno"></span>&nbsp;&nbsp;<span ng-bind="job.amt"></span></p>
             <p><span ng-bind="job.CollectedAmt"></span></p>
@@ -57,7 +65,7 @@
             <p><span ng-bind="job.JobNo"></span></p>
             <p><span ng-bind=""></span></p>
           </div>
-        </div>
+        </div> -->
       </ion-item>
     </ion-list>
   </ion-content>

@@ -12,7 +12,7 @@ appConfig.constant('ENV', {
   'appId': '9CBA0A78-7D1D-49D3-BA71-C72E93F9E48F',
   'apkName': 'TMS',
   'updateFile': 'update.json',
-  'rootPath': 'TMS',
+  'rootPath': 'JollyB',
   'configFile': 'config.txt',
   'version': '1.0.2'
 });

@@ -4,60 +4,12 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-ion	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^<ion-view title="JobListing-Detail">$/;"	function	line:1
-ion	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^  <ion-header-bar align-title="center" no-tap-scroll=true class="bar-positive">$/;"	function	line:2
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^    <div class="buttons">$/;"	function	line:3
-button	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^      <button class="button button-icon button-clear ion-android-arrow-back" ng-click="returnList()"><\/button>$/;"	function	line:4
-h	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^    <h1 class="title" ng-bind="title">Collection <Booking No><\/h1>$/;"	function	line:6
-ion	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^  <ion-content id="iPane">$/;"	function	line:8
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^    <div style="height: 43px;"><\/div>$/;"	function	line:9
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^    <div class="card" id="iCard" style="overflow-y:auto">$/;"	function	line:10
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^      <div class="button-bar">$/;"	function	line:11
-a	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <a class="button" ng-href="tel:08605925888865">$/;"	function	line:12
-button	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <button class="button">$/;"	function	line:18
-button	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <button class="button">$/;"	function	line:21
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^      <div class="item item-input-inset">$/;"	function	line:25
-label	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <label class="item-input-wrapper">$/;"	function	line:27
-label	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <label>Box No: <\/label>$/;"	function	line:29
-input	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <input type="text" placeholder="Box No" ng-model="Detail.csbk1.ItemNo" ng-readonly="true">$/;"	function	line:30
-button	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <button class="button icon ion-android-refresh">$/;"	function	line:32
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^      <div class="row item item-divider">$/;"	function	line:35
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <div class="col">$/;"	function	line:36
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <div class="col">$/;"	function	line:39
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <div class="col">$/;"	function	line:42
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^      <div class="item item-text-wrap">$/;"	function	line:46
-ion	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <ion-item class="item" ng-repeat="Csbk2 in Detail.csbk2s">$/;"	function	line:47
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="row" style="height:1px;">$/;"	function	line:48
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^            <div class="col" style="height:1px;">$/;"	function	line:49
-p	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^              <p><span ng-bind="Csbk2.BoxCode"><\/span><\/p>$/;"	function	line:51
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^            <div class="col" style="height:1px;">$/;"	function	line:53
-p	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^              <p><span ng-bind="Csbk2.Pcs"><\/span><\/p>$/;"	function	line:55
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^            <div class="col-20"  style="height:1px;">$/;"	function	line:57
-input	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^              <input type="text" id="iCollectedPcs" style="height:30px;"  ng-model="Csbk2.CollectedPcs" >$/;"	function	line:60
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:65
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:68
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:71
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:76
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:79
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:82
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^      <div>$/;"	function	line:87
-button	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <button class="button button-block button-calm">$/;"	function	line:88
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^      <div>$/;"	function	line:92
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <div class="row">$/;"	function	line:93
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:94
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:97
-p	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^            <p><span ng-bind="csbk2.Deposit"><\/span><\/p>$/;"	function	line:98
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:100
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:103
-p	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^            <p><span ng-bind="csbk2.AllBalance"><\/span><\/p>$/;"	function	line:104
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^        <div class="row">$/;"	function	line:107
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:108
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:111
-p	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^            <p><span ng-bind="csbk2.Discount"><\/span><\/p>$/;"	function	line:112
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:114
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^          <div class="col">$/;"	function	line:117
-input	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^            <input class="col" id="iCollectedAmt"  style="height:22px;"  type="text" ng-model="csbk2.CollectedAmt">$/;"	function	line:119
-ion	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^  <ion-footer-bar class="bar-positive">$/;"	function	line:125
-div	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^    <div class="button-bar">$/;"	function	line:126
-button	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^      <button class="button icon ion-android-done" ng-click="gotoConfirm()">$/;"	function	line:127
-button	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\detail.html	/^      <button class="button icon ion-arrow-return-right" ng-click="returnList()">$/;"	function	line:130
+refreshCompleteDate	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\dailycompleted\dailycompleted.js	/^  $scope.refreshCompleteDate = function( CompleteDate ) {$/;"	function	line:19
+ShowDailyCompleted	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\dailycompleted\dailycompleted.js	/^$scope.ShowDailyCompleted = function( CompletedDate ) {$/;"	function	line:26
+showPopup	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\dailycompleted\dailycompleted.js	/^    var showPopup = function(title, type) {$/;"	function	line:62
+showList	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\dailycompleted\dailycompleted.js	/^    var showList = function() {$/;"	function	line:73
+returnMain	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\dailycompleted\dailycompleted.js	/^    $scope.returnMain = function() {$/;"	function	line:101
+save	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\dailycompleted\dailycompleted.js	/^    $scope.save = function() {$/;"	function	line:106
+clear	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\dailycompleted\dailycompleted.js	/^    $scope.clear = function() {$/;"	function	line:116
+openCam	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\dailycompleted\dailycompleted.js	/^    $scope.openCam = function() {$/;"	function	line:122
+clearInput	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\dailycompleted\dailycompleted.js	/^    $scope.clearInput = function() {$/;"	function	line:132

@@ -71,6 +71,7 @@ namespace WebApi
             container.RegisterAutoWired<WebApi.ServiceModel.TMS.Slcr_Logic>();
             container.RegisterAutoWired<WebApi.ServiceModel.TMS.UploadImg_Logic>();
             container.RegisterAutoWired<WebApi.ServiceModel.TMS.DownLoadImg_Logic>();
+            container.RegisterAutoWired<WebApi.ServiceModel.TMS.Rcbp_Logic>();
 
         }
         #region DES

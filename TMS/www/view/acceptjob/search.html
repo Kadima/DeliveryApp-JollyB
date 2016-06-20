@@ -33,19 +33,26 @@
         </div>
     </ion-pane>
     <ion-content style="margin-top:110px;">
-        <ion-list tabindex="-1" id="div-list">
-            <ion-item class="item" ng-repeat="job in jobs" ng-click="gotoDetail(job)">
+        <ion-list   can-swipe="true" tabindex="-1" id="div-list">
+            <ion-item nav-clear menu-close class="item item-icon-right" ng-repeat="job in jobs" ng-click="gotoDetail(job)">
                 <div class="row">
 					<div class="col col-40">
 						<p><span ng-bind="job.action"></span>&nbsp;&nbsp;<span ng-bind="job.amt"></span></p>
 						<p><span ng-bind="job.time"></span></p>
 						<p><span ng-bind="job.code"></span></p>
 					</div>
-					<div class="col">
+					<div class="col col-50">
 						<p><span ng-bind="job.customer.name"></span></p>
-						<p><span ng-bind="job.customer.address"></span></p>
-					</div>
+        <textarea wrap="hard"  ng-model="job.customer.address" rows="4" readonly="true" style="border-style:none;background-color: #fff;">
+</textarea>
+			    <!-- <p><span ng-bind="job.customer.address"></span></p> -->
+
+        	</div>
 				</div>
+        <i class="icon ion-android-arrow-dropleft"></i>
+                  <ion-option-button class="button-assertive" ng-click="deleteCsbk1($index,job)">
+                      <i class="icon ion-android-delete"></i>
+                  </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>

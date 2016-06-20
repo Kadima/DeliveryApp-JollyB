@@ -1,10 +1,23 @@
 'use strict';
-app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams', '$ionicPopup', '$timeout', '$cordovaToast', '$cordovaFile', '$cordovaAppVersion', 'ApiService','$ionicPlatform','$cordovaSQLite','$rootScope',
-  function(ENV, $scope, $http, $state, $stateParams, $ionicPopup, $timeout, $cordovaToast, $cordovaFile, $cordovaAppVersion, ApiService,$ionicPlatform,$cordovaSQLite,$rootScope ) {
+app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams', '$ionicPopup', '$timeout', '$cordovaToast', '$cordovaFile', '$cordovaAppVersion', 'ApiService', '$ionicPlatform', '$cordovaSQLite', '$rootScope',
+  function(ENV, $scope, $http, $state, $stateParams, $ionicPopup, $timeout, $cordovaToast, $cordovaFile, $cordovaAppVersion, ApiService, $ionicPlatform, $cordovaSQLite, $rootScope) {
     var alertPopup = null;
     var alertPopupTitle = '';
     $scope.logininfo = {
       strDriverId: ''
+    };
+    var showPopup = function(title, type, callback) {
+      if (alertPopup !== null) {
+        alertPopup.close();
+        alertPopup = null;
+      }
+      alertPopup = $ionicPopup.alert({
+        title: title,
+        okType: 'button-' + type
+      });
+      alertPopup.then(function(res) {
+        if (typeof(callback) == 'function') callback(res);
+      });
     };
 
     $scope.funcLogin = function(blnDemo) {
@@ -27,36 +40,36 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
       } else {
 
         if ($scope.logininfo.strDriverId === '') {
-          alertPopupTitle = 'Please Enter Driver ID.';
-          alertPopup = $ionicPopup.alert({
-            title: alertPopupTitle,
-            okType: 'button-assertive'
-          });
-          alertPopup.then(function(res) {
-          });
-        }
-        else {
+          // alertPopupTitle = 'Please Enter Driver ID.';
+          // alertPopup = $ionicPopup.alert({
+          //   title: alertPopupTitle,
+          //   okType: 'button-assertive'
+          // });
+          // alertPopup.then(function(res) {
+          // });
+          showPopup('Please Enter Driver ID.', 'calm', function(res) {});
+        } else {
           // $state.go('index.main', {}, {
           //   reload: true
           // });
           var strUri = '/api/tms/login/check?DriverCode=' + $scope.logininfo.strDriverId;
-            ApiService.GetParam(strUri, true).then(function success(result) {
+          ApiService.GetParam(strUri, true).then(function success(result) {
             var results = result.data.results;
             if (is.not.empty(results)) {
               sessionStorage.clear();
               sessionStorage.setItem('strDriverId', $scope.logininfo.strDriverId);
               sessionStorage.setItem('strDriverCode', $scope.logininfo.strDriverId);
               sessionStorage.setItem('strDriverName', results[0].DriverName);
-              if ( !ENV.fromWeb ) {
-                          $cordovaSQLite.execute( db, 'INSERT INTO Users (uid) VALUES (?)', [ $scope.logininfo.strDriverId ] )
-                              .then( function( result ) {
-                              }, function( error ) {
-                              } )
-
-            }
+              if (!ENV.fromWeb) {
+                $cordovaSQLite.execute(db, 'INSERT INTO Users (uid) VALUES (?)', [$scope.logininfo.strDriverId])
+                  .then(function(result) {}, function(error) {})
+              }
               $state.go('index.main', {}, {
                 reload: true
               });
+              $rootScope.$broadcast('login');
+            } else {
+              showPopup('Invalid Driver ID.', 'calm', function(res) {});
             }
           });
         }
@@ -78,30 +91,30 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
         }
       }
     });
-    $ionicPlatform.ready( function() {
-        if ( !ENV.fromWeb ) {
-            $cordovaSQLite.execute( db, 'SELECT * FROM Users ORDER BY id DESC' )
-                .then(
-                    function( res ) {
-                        if ( res.rows.length > 0 && is.not.undefined( res.rows.item( 0 ).uid ) ) {
-                            var value = res.rows.item( 0 ).uid;
-                            $rootScope.$broadcast( 'login' );
-                            sessionStorage.clear();
-                            sessionStorage.setItem( 'strDriverId', value );
-                            $state.go('index.main', {}, {
-                              reload: true
-                            });
-                        }else{
-                          //  gotoLogin(false);
-                        }
-                    },
-                    function( error ) {
-                      //  gotoLogin(false);
-                    }
-                );
-        }else{
-          //  gotoLogin(false);
-        }
+    $ionicPlatform.ready(function() {
+      if (!ENV.fromWeb) {
+        $cordovaSQLite.execute(db, 'SELECT * FROM Users ORDER BY id DESC')
+          .then(
+            function(res) {
+              if (res.rows.length > 0 && is.not.undefined(res.rows.item(0).uid)) {
+                var value = res.rows.item(0).uid;
+                $rootScope.$broadcast('login');
+                sessionStorage.clear();
+                sessionStorage.setItem('strDriverId', value);
+                $state.go('index.main', {}, {
+                  reload: true
+                });
+              } else {
+                //  gotoLogin(false);
+              }
+            },
+            function(error) {
+              //  gotoLogin(false);
+            }
+          );
+      } else {
+        //  gotoLogin(false);
+      }
     });
   }
 ]);
