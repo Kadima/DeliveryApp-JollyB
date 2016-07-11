@@ -9,6 +9,16 @@ appConfig.constant( 'ENV', {
         'api': 'www.sysfreight.net/apis/tms/jollyb',
         'port': '8081'
     },
+    websql: {
+      Name: 'TmsDB',
+      Version: '1.0',
+      DisplayName: 'TMS Database',
+      EstimatedSize: 10 * 11024 * 1024
+        },
+        sqlite: {
+          name: 'AppTms.db',
+          location: 'default'
+        },
     port: '8081', // http port no
     ssl: false,
     debug: true,

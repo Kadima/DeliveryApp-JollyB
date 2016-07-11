@@ -8,20 +8,39 @@ var checkDatetime = function (datetime) {
     return datetime;
 };
 
-var objClone = function (oldObj, newObj) {
-    for (var key in newObj) {
-        if (newObj.hasOwnProperty(key)) {
-            if (is.null(oldObj[key]) || is.undefined(oldObj[key]) || is.equal(oldObj[key], 'undefined')) {
-                oldObj[key] = '';
-            }
-            if (is.equal(newObj[key], 'INT')) {
-                newObj[key] = oldObj[key];
+
+var objClone = function (obj) {
+    var newObj = {};
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            if(is.object(obj[prop])){
+                newObj[prop] = objClone(obj[prop]);
             } else {
-                newObj[key] = oldObj[key];
+                if ( is.null( obj[ prop ] ) || is.undefined( obj[ prop ] ) || is.equal( obj[ prop ], 'undefined' ) ) {
+                    newObj[ prop ] = '';
+                } else{
+                    newObj[prop] = obj[prop];
+                }
             }
         }
     }
-}
+    return newObj;
+};
+
+// var objClone = function (oldObj, newObj) {
+//     for (var key in newObj) {
+//         if (newObj.hasOwnProperty(key)) {
+//             if (is.null(oldObj[key]) || is.undefined(oldObj[key]) || is.equal(oldObj[key], 'undefined')) {
+//                 oldObj[key] = '';
+//             }
+//             if (is.equal(newObj[key], 'INT')) {
+//                 newObj[key] = oldObj[key];
+//             } else {
+//                 newObj[key] = oldObj[key];
+//             }
+//         }
+//     }
+// }
     /*
     var db_websql = window.openDatabase( db_websql_info.Name, db_websql_info.Version, db_websql_info.DisplayName, db_websql_info.EstimatedSize );
 

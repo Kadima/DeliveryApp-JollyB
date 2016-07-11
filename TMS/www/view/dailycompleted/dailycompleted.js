@@ -36,10 +36,8 @@ app.controller('dailycompletedCtrl', ['ENV', '$scope', '$state', '$ionicPopup', 
 
         var ShowDailyCompleted = function () {
             $ionicPlatform.ready(function () {
-              var strSql = "SELECT * FROM Csbk2 left join Csbk1 on Csbk2.TrxNo = Csbk1.TrxNo  where  DriverId='" + sessionStorage.getItem("strDriverId") + "' and CompletedDate='" + $scope.Search.CompletedDate + "'";
-                    SqlService.Exec(strSql).then(function (results) {
-                      console.log(results);
-                        console.log('resuddddddlts');
+              // var strSql = "SELECT * FROM Csbk2 left join Csbk1 on Csbk2.TrxNo = Csbk1.TrxNo  where  DriverId='" + sessionStorage.getItem("strDriverId") + "' and CompletedDate='" + $scope.Search.CompletedDate + "'";
+                    SqlService.Select('Csbk2 left join Csbk1 on Csbk2.TrxNo = Csbk1.TrxNo','*',"DriverId='" + sessionStorage.getItem("strDriverId") + "' and CompletedDate='" + $scope.Search.CompletedDate + "' ").then(function (results) {
                         $scope.Csbk1s = new Array();
                         if (results.rows.length > 0) {
                             var jobs = '';

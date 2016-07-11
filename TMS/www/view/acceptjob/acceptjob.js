@@ -62,10 +62,10 @@ app.controller('AcceptJobCtrl', ['ENV', '$scope', '$state', '$ionicPopup', '$cor
                             };
                             for (var i = 0; i < results.length; i++) {
                                 var objCsbk1 = results[i];
-                                var newCsbk1 = TABLE_DB.Csbk1;
-                                objClone(objCsbk1, newCsbk1);
-                                newCsbk1.DriverCode = sessionStorage.getItem('strDriverId').toString();
-                                SqlService.Insert('Csbk1', newCsbk1).then(function (result) {});
+                                // var newCsbk1 = TABLE_DB.Csbk1;
+                                // objClone(sobjCsbk1, newCsbk1);
+                                objCsbk1.DriverCode = sessionStorage.getItem('strDriverId').toString();
+                                SqlService.Insert('Csbk1', objCsbk1).then(function (result) {});
                           }
                             dataResults = dataResults.concat(Csbk1);
                             $scope.jobs = dataResults;

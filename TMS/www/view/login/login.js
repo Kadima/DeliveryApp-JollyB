@@ -86,8 +86,8 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
             }
         });
         $ionicPlatform.ready(function () {
-            var strSql = 'SELECT * FROM Users';
-            SqlService.Exec(strSql).then(function (res) {
+            // var strSql = 'SELECT * FROM Users';
+            SqlService.Select('Users','*').then(function (res) {
                     if (res.rows.length > 0 && is.not.undefined(res.rows.item(0).uid)) {
                         var value = res.rows.item(0).uid;
                         $rootScope.$broadcast('login');

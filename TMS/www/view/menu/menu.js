@@ -1,28 +1,34 @@
 'use strict';
 app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$rootScope', '$http',
-  '$ionicLoading', '$ionicPopup', '$ionicSideMenuDelegate', '$cordovaAppVersion', '$cordovaFile', '$cordovaToast', '$cordovaSQLite', 'ApiService',
+  '$ionicLoading', '$ionicPopup', '$ionicSideMenuDelegate', '$cordovaAppVersion', '$cordovaFile', '$cordovaToast', '$cordovaSQLite', 'ApiService','SqlService',
   function ( ENV, $ionicPlatform, $scope, $state, $rootScope, $http, $ionicLoading, $ionicPopup,
-        $ionicSideMenuDelegate, $cordovaAppVersion, $cordovaFile, $cordovaToast, $cordovaSQLite, ApiService ) {
+        $ionicSideMenuDelegate, $cordovaAppVersion, $cordovaFile, $cordovaToast, $cordovaSQLite, ApiService,SqlService ) {
         var alertPopup = null;
         var alertPopupTitle = '';
         $scope.Status = {
             Login: false
         };
         var deleteLogin = function () {
-            if ( !ENV.fromWeb ) {
-                $cordovaSQLite.execute( db, 'DELETE FROM Users' )
-                    .then(
-                        function ( res ) {
-                            console.log( 'Delete LoginInfo' );
-                            $rootScope.$broadcast( 'logout' );
-                            $state.go( 'index.login', {}, {} );
-                        },
-                        function ( error ) {}
-                    );
-            } else {
-                $state.go( 'index.login', {}, {} );
-                $rootScope.$broadcast( 'logout' );
-            }
+          SqlService.Del('Users','','')
+          .then(function (res)
+           {
+             $rootScope.$broadcast( 'logout' );
+             $state.go( 'index.login', {}, {} );
+          });
+
+            // if ( !ENV.fromWeb ) {
+            //     $cordovaSQLite.execute( db, 'DELETE FROM Users' )
+            //         .then(
+            //             function ( res ) {
+            //                 $rootScope.$broadcast( 'logout' );
+            //                 $state.go( 'index.login', {}, {} );
+            //             },
+            //             function ( error ) {}
+            //         );
+            // } else {
+            //     $state.go( 'index.login', {}, {} );
+            //     $rootScope.$broadcast( 'logout' );
+            // }
         };
         $scope.logout = function () {
             var confirmPopup = $ionicPopup.confirm( {

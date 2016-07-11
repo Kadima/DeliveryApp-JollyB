@@ -11,16 +11,7 @@ app.controller( 'driverCodeCtrl', [ '$scope', '$state', 'ApiService', '$cordovaS
             } );
         };
 
-// var longitude =111.11;
-// var latitude =34.22;
-// $scope.mapOptions={
-//   center:{
-//     longitude:longitude,
-//     latitude:latitude
-//   },
-//   city:'dd',
-//
-// };
+
         $scope.getDriverCode = function () {
             if ( window.cordova && window.cordova.plugins.Keyboard ) {
                 cordova.plugins.Keyboard.close();
