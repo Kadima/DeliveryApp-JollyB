@@ -19,18 +19,13 @@
                             <p><span ng-bind="job.time"></span></p>
                             <p><span ng-bind="job.code"></span></p>
                         </div>
-                        <div class="col col-40">
+                        <div class="col col-60">
                             <p><span ng-bind="job.customer.name"></span></p>
-                            <textarea wrap="hard" ng-model="job.customer.address" rows="4" ng-class="{'s-green': job.status.success, 's-red': job.status.failed}">
-                            </textarea>
+                            <p><span ng-bind="job.customer.address" style="    white-space: normal;"></span></p>
                         </div>
-                        <div class="col col-10">
-                            <i class="icon ion-android-done" ng-if="job.status.success" style="color:#000;right:22px;"></i>
-                            <i class="icon ion-android-refresh" ng-if="job.status.inprocess" style="color:#000;right:22px;"></i>
-                        </div>
-                        <div class="col col-10">
-                            <i class="icon ion-android-arrow-dropleft" style="color:#000;right:2px;"></i>
-                        </div>
+                        <i class="icon iconfont ion-android-done" ng-if="job.status.success" style="right:26px;"></i>
+                        <i class="icon iconfont ion-android-refresh" ng-if="job.status.inprocess" style="right:26px;"></i>
+                        <i class="icon iconfont ion-android-arrow-dropleft" style="right:2px;"></i>
                     </div>
                     <ion-option-button class="button-assertive" ng-click="deleteCsbk1($index,job)">
                         <i class="icon ion-android-delete"></i>

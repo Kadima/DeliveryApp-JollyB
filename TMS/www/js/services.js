@@ -444,286 +444,6 @@ appService.service( 'SqlService', [ '$q', 'ENV', '$timeout', '$ionicLoading', '$
             }
             return deferred.promise;
         };
-
-
-
-        // this.Drop = function ( table ) {
-        //     var deferred = $q.defer();
-        //     var strSql = 'Drop Table If Exists ' + table;
-        //     if ( ENV.fromWeb ) {
-        //         if ( db_websql ) {
-        //             db_websql.transaction( function ( tx ) {
-        //                 tx.executeSql( strSql, [], function ( tx, results ) {
-        //                     deferred.resolve( results );
-        //                 }, function ( tx, error ) {
-        //                     deferred.reject( error );
-        //                     console.error( error );
-        //                     $cordovaToast.showShortBottom( error.message );
-        //                 } );
-        //             } );
-        //         } else {
-        //             deferred.reject( null );
-        //             console.error( 'No WebSql Instance' );
-        //             $cordovaToast.showShortBottom( 'No WebSql Instance' );
-        //         }
-        //     } else {
-        //         $cordovaSQLite.execute( db_sqlite, strSql )
-        //             .then( function ( results ) {
-        //                     deferred.resolve( results );
-        //                 },
-        //                 function ( error ) {
-        //                     deferred.reject( error );
-        //                     console.error( error );
-        //                     $cordovaToast.showShortBottom( error );
-        //                 }
-        //             );
-        //     }
-        //     return deferred.promise;
-        // };
-        // this.Create = function ( table, obj ) {
-        //     var deferred = $q.defer();
-        //     var strSql = 'Create Table If Not Exists' + table;
-        //     if(is.not.empty(obj)){
-        //         var fileds = '';
-        //         for ( var key in obj ) {
-        //             if ( obj.hasOwnProperty( key )) {
-        //                 if(is.empty(fileds)){
-        //                     fileds = key + ' ' + obj[ key ];
-        //                 }else{
-        //                     fileds = fileds + ',' + key + ' ' + obj[ key ];
-        //                 }
-        //             }
-        //         }
-        //         strSql = strSql + '(' + fileds + ')';
-        //         if ( ENV.fromWeb ) {
-        //             if ( db_websql ) {
-        //                 db_websql.transaction( function ( tx ) {
-        //                     tx.executeSql( strSql, [], function ( tx, results ) {
-        //                         deferred.resolve( results );
-        //                     }, function ( tx, error ) {
-        //                         deferred.reject( error );
-        //                         console.error( error );
-        //                         $cordovaToast.showShortBottom( error.message );
-        //                     } );
-        //                 } );
-        //             } else {
-        //                 deferred.reject( null );
-        //                 console.error( 'No WebSql Instance' );
-        //                 $cordovaToast.showShortBottom( 'No WebSql Instance' );
-        //             }
-        //         } else {
-        //             $cordovaSQLite.execute( db_sqlite, strSql )
-        //                 .then( function ( results ) {
-        //                         deferred.resolve( results );
-        //                     },
-        //                     function ( error ) {
-        //                         deferred.reject( error );
-        //                         console.error( error );
-        //                         $cordovaToast.showShortBottom( error );
-        //                     }
-        //                 );
-        //         }
-        //     }else{
-        //         deferred.reject( null );
-        //         console.error( 'Insert Script Error' );
-        //         $cordovaToast.showShortBottom( 'Insert Script Error' );
-        //     }
-        //     return deferred.promise;
-        // };
-        // this.Del = function ( table, key, value ) {
-        //     var deferred = $q.defer();
-        //     var strSql = 'Delete From ' + table;
-        //     if(is.not.empty(key) && is.not.empty(value)){
-        //         strSql = strSql + ' Where ' + key + '=' + value;
-        //     }
-        //     if ( ENV.fromWeb ) {
-        //         if ( db_websql ) {
-        //             db_websql.transaction( function ( tx ) {
-        //                 tx.executeSql( strSql, [], function ( tx, results ) {
-        //                     deferred.resolve( results );
-        //                 }, function ( tx, error ) {
-        //                     deferred.reject( error );
-        //                     console.error( error );
-        //                     $cordovaToast.showShortBottom( error.message );
-        //                 } );
-        //             } );
-        //         } else {
-        //             deferred.reject( null );
-        //             console.error( 'No WebSql Instance' );
-        //             $cordovaToast.showShortBottom( 'No WebSql Instance' );
-        //         }
-        //     } else {
-        //         $cordovaSQLite.execute( db_sqlite, strSql )
-        //             .then( function ( results ) {
-        //                     deferred.resolve( results );
-        //                 },
-        //                 function ( error ) {
-        //                     deferred.reject( error );
-        //                     console.error( error );
-        //                     $cordovaToast.showShortBottom( error );
-        //                 }
-        //             );
-        //     }
-        //     return deferred.promise;
-        // };
-        // this.Insert = function ( table, obj ) {
-        //     var deferred = $q.defer();
-        //     var strSql = 'Insert Into ' + table;
-        //     if(is.not.empty(obj)){
-        //         var fileds = '', values ='';
-        //         for ( var key in obj ) {
-        //             if ( obj.hasOwnProperty( key ) && is.not.equal(key,'__type')) {
-        //                 if ( is.null( obj[ key ] ) || is.undefined( obj[ key ] ) || is.equal( obj[ key ], 'undefined' )) {
-        //                     obj[ key ] = '';
-        //                 }
-        //                 if ( is.string(obj[ key ]) ) {
-        //                     obj[ key ] = '\'' + obj[ key ] + '\'';
-        //                 }
-        //                 if(is.empty(fileds)){
-        //                     fileds = key;
-        //                 }else{
-        //                     fileds = fileds + ',' + key;
-        //                 }
-        //                 if(is.empty(values)){
-        //                     values = obj[ key ];
-        //                 }else{
-        //                     values = values + ','+ obj[ key ];
-        //                 }
-        //             }
-        //         }
-        //
-        //         strSql = strSql + '(' + fileds + ') values(' + values + ')';
-        //         if ( ENV.fromWeb ) {
-        //             if ( db_websql ) {
-        //                 db_websql.transaction( function ( tx ) {
-        //                     tx.executeSql( strSql, [], function ( tx, results ) {
-        //                         deferred.resolve( results );
-        //                     }, function ( tx, error ) {
-        //                         deferred.reject( error );
-        //                         console.error( error );
-        //                         $cordovaToast.showShortBottom( error.message );
-        //                     } );
-        //                 } );
-        //             } else {
-        //                 deferred.reject( null );
-        //                 console.error( 'No WebSql Instance' );
-        //                 $cordovaToast.showShortBottom( 'No WebSql Instance' );
-        //             }
-        //         } else {
-        //             $cordovaSQLite.execute( db_sqlite, strSql )
-        //                 .then( function ( results ) {
-        //                         deferred.resolve( results );
-        //                     },
-        //                     function ( error ) {
-        //                         deferred.reject( error );
-        //                         console.error( error );
-        //                         $cordovaToast.showShortBottom( error );
-        //                     }
-        //                 );
-        //         }
-        //     }else{
-        //         deferred.reject( null );
-        //         console.error( 'Insert Script Error' );
-        //         $cordovaToast.showShortBottom( 'Insert Script Error' );
-        //     }
-        //     return deferred.promise;
-        // };
-        // this.Update = function ( table, obj, strFilter) {
-        //     var deferred = $q.defer();
-        //     var strSql = 'Update ' + table + ' Set ';
-        //     if(is.not.empty(obj)){
-        //         var fileds = '';
-        //         for ( var key in obj ) {
-        //             if ( obj.hasOwnProperty( key ) ) {
-        //                 if ( is.null( obj[ key ] ) || is.undefined( obj[ key ] ) || is.equal( obj[ key ], 'undefined' )) {
-        //                     obj[ key ] = '';
-        //                 }
-        //                 if ( is.string(obj[ key ]) ) {
-        //                     obj[ key ] = '\'' + obj[ key ] + '\'';
-        //                 }
-        //                 if(is.empty(fileds)){
-        //                     fileds = key + '=' + obj[ key ];
-        //                 }else{
-        //                     fileds = fileds + ',' + key + '=' + obj[ key ];
-        //                 }
-        //             }
-        //         }
-        //         strSql = strSql + fileds;
-        //         if(is.not.empty(strFilter) && is.not.empty(strFilter)){
-        //             strSql = strSql + ' Where ' + strFilter;
-        //         }
-        //         if ( ENV.fromWeb ) {
-        //             if ( db_websql ) {
-        //                 db_websql.transaction( function ( tx ) {
-        //                     tx.executeSql( strSql, [], function ( tx, results ) {
-        //                         deferred.resolve( results );
-        //                     }, function ( tx, error ) {
-        //                         deferred.reject( error );
-        //                         console.error( error );
-        //                         $cordovaToast.showShortBottom( error.message );
-        //                     } );
-        //                 } );
-        //             } else {
-        //                 deferred.reject( null );
-        //                 console.error( 'No WebSql Instance' );
-        //                 $cordovaToast.showShortBottom( 'No WebSql Instance' );
-        //             }
-        //         } else {
-        //             $cordovaSQLite.execute( db_sqlite, strSql )
-        //                 .then( function ( results ) {
-        //                         deferred.resolve( results );
-        //                     },
-        //                     function ( error ) {
-        //                         deferred.reject( error );
-        //                         console.error( error );
-        //                         $cordovaToast.showShortBottom( error );
-        //                     }
-        //                 );
-        //         }
-        //     }else{
-        //         deferred.reject( null );
-        //         console.error( 'Update Script Error' );
-        //         $cordovaToast.showShortBottom( 'Update Script Error' );
-        //     }
-        //     return deferred.promise;
-        // };
-        //
-        //
-        // this.Exec = function ( strSql ) {
-        //     var deferred = $q.defer();
-        //     if ( ENV.fromWeb && db_websql ) {
-        //         db_websql.transaction( function ( tx ) {
-        //             tx.executeSql( strSql, [], function ( tx, results ) {
-        //                   deferred.resolve( results );
-        //             }, function ( tx, error ) {
-        //                 deferred.reject( error );
-        //                 console.error( error );
-        //                 $cordovaToast.showShortBottom( error.message );
-        //             } );
-        //         } );
-        //     } else {
-        //         $cordovaSQLite.execute( db_sqlite, strSql )
-        //         .then( function ( results ) {
-        //                     if ( results.rows.length > 0 ) {
-        //                         deferred.resolve( results );
-        //                     }
-        //                      else {
-        //                       deferred.resolve( results );
-        //                       //  deferred.reject( results );
-        //                       //    console.log(results);
-        //                       //     $cordovaToast.showShortBottom(results.meta.message + '\r\n' + results.meta.errors.message );
-        //                     }
-        //                 },
-        //                 function ( error ) {
-        //                     deferred.reject( error );
-        //                      console.error( error );
-        //                       $cordovaToast.showShortBottom( error );
-        //                 }
-        //             );
-        //     }
-        //     return deferred.promise;
-        // };
-
     }
 ] );
 
@@ -734,7 +454,7 @@ appService.service( 'PopupService', [
     function (
         $q,
         $ionicPopup ) {
-        this.Alert = function ( popup, title, subtitle, callback ) {
+        this.Alert = function ( popup, title, subtitle) {
             var deferred = $q.defer();
             if ( is.null( popup ) ) {
                 popup = $ionicPopup.alert( {
@@ -742,14 +462,9 @@ appService.service( 'PopupService', [
                     subTitle: subtitle,
                     okType: 'button-assertive'
                 } );
-                if ( is.function( callback ) ) {
-                    popup.then( function ( res ) {
-                        deferred.resolve( popup );
-                        callback();
-                    } );
-                } else {
-                    deferred.resolve( popup );
-                }
+                popup.then( function ( res ) {
+                    deferred.resolve( res );
+                } );
             } else {
                 popup.close();
                 popup = null;
@@ -757,7 +472,7 @@ appService.service( 'PopupService', [
             }
             return deferred.promise;
         };
-        this.Info = function ( popup, title, subtitle, callback ) {
+        this.Info = function ( popup, title, subtitle ) {
             var deferred = $q.defer();
             if ( is.null( popup ) ) {
                 popup = $ionicPopup.alert( {
@@ -765,14 +480,9 @@ appService.service( 'PopupService', [
                     subTitle: subtitle,
                     okType: 'button-calm'
                 } );
-                if ( is.function( callback ) ) {
-                    popup.then( function ( res ) {
-                        deferred.resolve( popup );
-                        callback();
-                    } );
-                } else {
-                    deferred.resolve( popup );
-                }
+                popup.then( function ( res ) {
+                    deferred.resolve( res );
+                } );
             } else {
                 popup.close();
                 popup = null;
@@ -780,7 +490,26 @@ appService.service( 'PopupService', [
             }
             return deferred.promise;
         };
-        this.Show = function ( popup, type, title, subtitle, callback ) {
+
+ this.Confirm=function(popup, type, title, template){
+   var deferred = $q.defer();
+   if ( is.null( popup ) ) {
+       popup = $ionicPopup.confirm( {
+           title: title,
+           template: template,
+       } );
+       popup.then( function ( res ) {
+            deferred.resolve( res );
+       } );
+   } else {
+       popup.close();
+       popup = null;
+       deferred.reject( popup );
+   }
+   return deferred.promise;
+
+ };
+        this.Show = function ( popup, type, title, subtitle ) {
             var deferred = $q.defer();
             if ( is.null( popup ) ) {
                 popup = $ionicPopup.alert( {
@@ -788,14 +517,9 @@ appService.service( 'PopupService', [
                     subTitle: subtitle,
                     okType: 'button-' + type
                 } );
-                if ( is.function( callback ) ) {
-                    popup.then( function ( res ) {
-                        deferred.resolve( popup );
-                        callback();
-                    } );
-                } else {
-                    deferred.resolve( popup );
-                }
+                popup.then( function ( res ) {
+                    deferred.resolve( res );
+                } );
             } else {
                 popup.close();
                 popup = null;
@@ -803,6 +527,7 @@ appService.service( 'PopupService', [
             }
             return deferred.promise;
         };
+
     } ] );
 
 appService.service( 'DownloadFileService', [ 'ENV', '$http', '$timeout', '$ionicLoading', '$cordovaToast', '$cordovaFile', '$cordovaFileTransfer', '$cordovaFileOpener2',

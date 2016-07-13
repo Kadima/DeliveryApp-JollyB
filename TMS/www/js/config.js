@@ -2,18 +2,20 @@
 var appConfig = angular.module( 'TMS.config', [] );
 appConfig.constant( 'ENV', {
     website: 'www.sysfreight.net/app/tms/jollyb',
-     api: 'www.sysfreight.net/apis/tms/jollyb',
-    // api:  'localhost:9679',
+      api: 'www.sysfreight.net/apis/tms/jollyb',
+    //  api:  'localhost:9679',
     reset: {
         'website': 'www.sysfreight.net/app/tms/jollyb',
         'api': 'www.sysfreight.net/apis/tms/jollyb',
         'port': '8081'
     },
+
+
     websql: {
-      Name: 'TmsDB',
-      Version: '1.0',
-      DisplayName: 'TMS Database',
-      EstimatedSize: 10 * 11024 * 1024
+      name: 'TmsDB',
+      version: '1.0',
+      displayName: 'TMS Database',
+      estimatedSize: 10 * 11024 * 1024
         },
         sqlite: {
           name: 'AppTms.db',
@@ -29,7 +31,7 @@ appConfig.constant( 'ENV', {
     updateFile: 'update.json',
     rootPath: 'JollyB',
     configFile: 'config.txt',
-    version: '1.0.2.27',
+    version: '1.0.2.28',
     apiMap: {
         login: {
             check : '/api/tms/login/check'

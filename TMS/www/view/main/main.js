@@ -1,25 +1,14 @@
 'use strict';
-app.controller( 'MainCtrl', [ '$scope', '$state', '$ionicPopup',
-    function ( $scope, $state, $ionicPopup ) {
-        var alertPopup = null,
-            strDriverName = sessionStorage.getItem( 'strDriverName' );
+app.controller( 'MainCtrl', [ '$scope', '$state', '$ionicPopup','PopupService',
+    function ( $scope, $state, $ionicPopup,PopupService ) {
+            var strDriverName = sessionStorage.getItem( 'strDriverName' );
         if ( is.not.empty( strDriverName ) ) {
             $scope.strName = strDriverName;
         } else {
             $scope.strName = 'Driver';
         }
-        var showPopup = function ( title, type ) {
-            if ( alertPopup != null ) {
-                alertPopup.close();
-                alertPopup = null;
-            }
-            alertPopup = $ionicPopup.alert( {
-                title: title,
-                okType: 'button-' + type
-            } );
-        };
         $scope.func_Dashboard = function () {
-            showPopup( 'Stay Tuned', 'calm' );
+            PopupService.Info(null ,'Stay Tuned' );
         };
         $scope.func_AJ = function () {
             $state.go( 'acceptJob', {}, {} );
@@ -31,9 +20,9 @@ app.controller( 'MainCtrl', [ '$scope', '$state', '$ionicPopup',
             $state.go( 'dailycompleted', {}, {} );
         };
         $scope.func_Reports = function () {
-            $state.go( 'reports', {}, {} );
+              PopupService.Info( null,'Stay Tuned' );
         };
         $scope.func_Setting = function () {
-            showPopup( 'Stay Tuned', 'calm' );
+            PopupService.Info( null,'Stay Tuned' );
         };
     } ] );

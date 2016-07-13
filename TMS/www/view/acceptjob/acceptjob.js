@@ -1,35 +1,52 @@
 'use strict';
-app.controller('AcceptJobCtrl', ['ENV', '$scope', '$state', '$ionicPopup', '$cordovaKeyboard', '$cordovaBarcodeScanner', '$cordovaSQLite', 'ACCEPTJOB_ORM', 'TABLE_DB', 'ApiService', 'SqlService',
-    function (ENV, $scope, $state, $ionicPopup, $cordovaKeyboard, $cordovaBarcodeScanner, $cordovaSQLite, ACCEPTJOB_ORM, TABLE_DB, ApiService, SqlService) {
-        var alertPopup = null,
-            dataResults = new Array();
+app.controller('AcceptJobCtrl', ['ENV', '$scope', '$state', '$ionicPopup', '$cordovaKeyboard', '$cordovaBarcodeScanner', '$cordovaSQLite', '$cordovaToast', 'ACCEPTJOB_ORM', 'TABLE_DB', 'ApiService', 'SqlService', 'PopupService',
+    function (ENV, $scope, $state, $ionicPopup, $cordovaKeyboard, $cordovaBarcodeScanner, $cordovaSQLite, $cordovaToast, ACCEPTJOB_ORM, TABLE_DB, ApiService, SqlService, PopupService) {
+        var dataResults = new Array();
         $scope.Search = {
             BookingNo: ''
         };
         var hmcsbk1 = new HashMap();
-        var showPopup = function (title, type) {
-            if (alertPopup === null) {
-                alertPopup = $ionicPopup.alert({
-                    title: title,
-                    okType: 'button-' + type
-                });
-            } else {
-                alertPopup.close();
-                alertPopup = null;
-            }
-        };
+        var getObjCsbk1 = function(obj){
+          var COLRuturnTime = '';
+          if (is.equal(obj.CollectionTimeStart, '') && is.equal(obj.CollectionTimeEnd, '')) {
+              COLRuturnTime = obj.ColTimeFrom + '-' + obj.ColTimeTo;
+          } else {
+              COLRuturnTime = obj.CollectionTimeStart + '-' + obj.CollectionTimeEnd;
+          }
+          var DLVReturntime = '';
+          if (is.equal(obj.CollectionTimeStart, '') && is.equal(obj.CollectionTimeEnd, '')) {
+              DLVReturntime = '';
+          } else {
+              DLVReturntime = obj.TimeFrom + '-' + obj.TimeTo;
+          }
+          var csbk1 = {
+              bookingNo: obj.BookingNo,
+              action: is.equal(obj.StatusCode, 'DLV') ? 'Deliver' : 'Collect',
+              amt: obj.Pcs + ' PKG',
+              time: is.equal(obj.StatusCode, 'DLV') ? DLVReturntime : COLRuturnTime,
+              code: obj.PostalCode,
+              customer: {
+                  name: obj.BusinessPartyName,
+                  address: obj.Address1 + obj.Address2 + obj.Address3 + obj.Address4
+              }
+          };
+          return csbk1;
+        }
         var showList = function () {
-            if (is.not.empty(ACCEPTJOB_ORM.LIST.Csbk1s)) {
-                dataResults = dataResults.concat(ACCEPTJOB_ORM.LIST.Csbk1s);
-                $scope.jobs = dataResults;
-                for (var i = 0; i < dataResults.length; i++) {
-                    hmcsbk1.set(dataResults[i].bookingNo, dataResults[i].bookingNo);
-                }
+          SqlService.Select( 'Csbk1', '*' ).then(function(results){
+            for (var i = 0; i < results.rows.length; i++) {
+              var csbk1 = getObjCsbk1(results.rows.item(i));
+              dataResults = dataResults.concat(csbk1);
             }
+            $scope.jobs = dataResults;
+            for (var i = 0; i < dataResults.length; i++) {
+                hmcsbk1.set(dataResults[i].bookingNo, dataResults[i].bookingNo);
+            }
+          });
         };
         var showCsbk = function (bookingNo) {
             if (hmcsbk1.has(bookingNo)) {
-                showPopup('Booking No is already exists', 'assertive');
+                PopupService.Alert(null, 'Booking No is already exists');
             } else {
                 if (is.not.empty(bookingNo)) {
                     var objUri = ApiService.Uri('/api/tms/csbk1').addSearch('BookingNo', bookingNo);
@@ -37,47 +54,22 @@ app.controller('AcceptJobCtrl', ['ENV', '$scope', '$state', '$ionicPopup', '$cor
                         var results = result.data.results;
                         if (is.not.empty(results)) {
                             hmcsbk1.set(bookingNo, bookingNo);
-                            var COLRuturnTime = '';
-                            if (is.equal(results[0].CollectionTimeStart, '') && is.equal(results[0].CollectionTimeEnd, '')) {
-                                COLRuturnTime = results[0].ColTimeFrom + '-' + results[0].ColTimeTo;
-                            } else {
-                                COLRuturnTime = results[0].CollectionTimeStart + '-' + results[0].CollectionTimeEnd;
-                            }
-                            var DLVReturntime = '';
-                            if (is.equal(results[0].CollectionTimeStart, '') && is.equal(results[0].CollectionTimeEnd, '')) {
-                                DLVReturntime = '';
-                            } else {
-                                DLVReturntime = results[0].TimeFrom + '-' + results[0].TimeTo;
-                            }
-                            var Csbk1 = {
-                                bookingNo: results[0].BookingNo,
-                                action: is.equal(results[0].StatusCode, 'DLV') ? 'Deliver' : 'Collect',
-                                amt: results[0].Pcs + ' PKG',
-                                time: is.equal(results[0].StatusCode, 'DLV') ? DLVReturntime : COLRuturnTime,
-                                code: results[0].PostalCode,
-                                customer: {
-                                    name: results[0].BusinessPartyName,
-                                    address: results[0].Address1 + results[0].Address2 + results[0].Address3 + results[0].Address4
-                                }
-                            };
                             for (var i = 0; i < results.length; i++) {
                                 var objCsbk1 = results[i];
-                                // var newCsbk1 = TABLE_DB.Csbk1;
-                                // objClone(sobjCsbk1, newCsbk1);
-                                objCsbk1.DriverCode = sessionStorage.getItem('strDriverId').toString();
-                                SqlService.Insert('Csbk1', objCsbk1).then(function (result) {});
-                          }
-                            dataResults = dataResults.concat(Csbk1);
+                              objCsbk1.DriverCode = sessionStorage.getItem('strDriverId').toString();
+                              SqlService.Insert('Csbk1', objCsbk1).then(function (result) {});
+                            }
+                            var csbk1 = getObjCsbk1(results[0]);
+                            dataResults = dataResults.concat(csbk1);
                             $scope.jobs = dataResults;
-                            ACCEPTJOB_ORM.LIST._setCsbk($scope.jobs);
                         } else {
-                            showPopup('Wrong Booking No', 'assertive');
+                            PopupService.Alert(null, 'Wrong Booking No');
                         }
                         $scope.Search.BookingNo = '';
                         $('#div-list').focus();
                     });
                 } else {
-                    showPopup('Booking No Is Not Null', 'assertive');
+                    PopupService.Alert(null, 'Booking No Is Not Null');
                 }
             }
         };
@@ -95,7 +87,7 @@ app.controller('AcceptJobCtrl', ['ENV', '$scope', '$state', '$ionicPopup', '$cor
             if (is.not.empty($scope.jobs)) {
                 $state.go('jobListingList', {}, {});
             } else {
-                showPopup('No Job Accepted', 'calm');
+                PopupService.Info(null, 'No Job Accepted');
             }
         };
         $scope.clear = function () {
@@ -125,12 +117,14 @@ app.controller('AcceptJobCtrl', ['ENV', '$scope', '$state', '$ionicPopup', '$cor
                 if (window.cordova) {
                     $cordovaKeyboard.close();
                 }
-                if (alertPopup === null) {
-                    showCsbk($scope.Search.BookingNo);
-                } else {
-                    alertPopup.close();
-                    alertPopup = null;
-                }
+                showCsbk($scope.Search.BookingNo);
+                // var alertPopup=null;
+                // if (alertPopup === null) {
+                //     showCsbk($scope.Search.BookingNo);
+                // } else {
+                //     alertPopup.close();
+                //     alertPopup = null;
+                // }
             }
         });
         showList();

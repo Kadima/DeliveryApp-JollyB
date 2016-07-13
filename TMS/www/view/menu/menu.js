@@ -1,10 +1,8 @@
 'use strict';
 app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$rootScope', '$http',
-  '$ionicLoading', '$ionicPopup', '$ionicSideMenuDelegate', '$cordovaAppVersion', '$cordovaFile', '$cordovaToast', '$cordovaSQLite', 'ApiService','SqlService',
+  '$ionicLoading', '$ionicPopup', '$ionicSideMenuDelegate', '$cordovaAppVersion', '$cordovaFile', '$cordovaToast', '$cordovaSQLite', 'ApiService','SqlService','PopupService',
   function ( ENV, $ionicPlatform, $scope, $state, $rootScope, $http, $ionicLoading, $ionicPopup,
-        $ionicSideMenuDelegate, $cordovaAppVersion, $cordovaFile, $cordovaToast, $cordovaSQLite, ApiService,SqlService ) {
-        var alertPopup = null;
-        var alertPopupTitle = '';
+        $ionicSideMenuDelegate, $cordovaAppVersion, $cordovaFile, $cordovaToast, $cordovaSQLite, ApiService,SqlService,PopupService ) {
         $scope.Status = {
             Login: false
         };
@@ -16,31 +14,26 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
              $state.go( 'index.login', {}, {} );
           });
 
-            // if ( !ENV.fromWeb ) {
-            //     $cordovaSQLite.execute( db, 'DELETE FROM Users' )
-            //         .then(
-            //             function ( res ) {
-            //                 $rootScope.$broadcast( 'logout' );
-            //                 $state.go( 'index.login', {}, {} );
-            //             },
-            //             function ( error ) {}
-            //         );
-            // } else {
-            //     $state.go( 'index.login', {}, {} );
-            //     $rootScope.$broadcast( 'logout' );
-            // }
         };
-        $scope.logout = function () {
-            var confirmPopup = $ionicPopup.confirm( {
-                title: 'Log Out',
-                template: 'Are you sure to log out?'
-            } );
-            confirmPopup.then( function ( res ) {
-                if ( res ) {
-                    deleteLogin();
-                }
-            } );
-        };
+    $scope.logout = function () {
+      PopupService.Confirm(null,'','Log Out','Are you sure to log out?').then(function(res){
+          if(res){
+            console.log(res);
+              deleteLogin();
+          }
+      });
+
+            // var confirmPopup = $ionicPopup.confirm( {
+            //     title: 'Log Out',
+            //     template: 'Are you sure to log out?'
+            // } );
+            // confirmPopup.then( function ( res ) {
+            //     if ( res ) {
+            //         deleteLogin();
+            //     }
+            // } );
+
+         };
         $scope.gotoSetting = function () {
             $state.go( 'index.setting', {}, {
                 reload: true
@@ -59,28 +52,15 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
                                     'Version': serverAppVersion
                                 } );
                             } else {
-                                alertPopupTitle = 'Already the Latest Version!';
-                                alertPopup = $ionicPopup.alert( {
-                                    title: alertPopupTitle,
-                                    okType: 'button-assertive'
-                                } );
+                                PopupService.Alert(null,'Already the Latest Version!');
                             }
                         } );
                     } )
                     .error( function ( res ) {
-                        console.error(res);
-                        alertPopupTitle = 'Connect Update Server Error!';
-                        alertPopup = $ionicPopup.alert( {
-                            title: alertPopupTitle,
-                            okType: 'button-assertive'
-                        } );
+                          PopupService.Alert(null,'Connect Update Server Error!');
                     } );
             } else {
-                alertPopupTitle = 'No Updates!';
-                alertPopup = $ionicPopup.alert( {
-                    title: alertPopupTitle,
-                    okType: 'button-calm'
-                } );
+              PopupService.Info(null,'No Updates!');
             }
         };
         $rootScope.$on( 'logout', function () {

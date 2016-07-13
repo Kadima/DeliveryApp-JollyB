@@ -23,10 +23,10 @@
                         </label>
                     </div>
                     <div class="col col-10">
-                        <button class="button button-clear button-small" ng-click="openCam()"><i class="icon ion-qr-scanner"></i></button>
+                        <button class="button button-clear button-positive button-small" ng-click="openCam()"><i class="icon ion-qr-scanner"></i></button>
                     </div>
                     <div class="col">
-                        <button class="button button-clear button-small" ng-click="clearInput()"><i class="icon ion-android-close"></i></button>
+                        <button class="button button-clear  button-positive button-small" ng-click="clearInput()"><i class="icon ion-android-close"></i></button>
                     </div>
                 </div>
             </div>
@@ -41,12 +41,11 @@
                         <p><span ng-bind="job.time"></span></p>
                         <p><span ng-bind="job.code"></span></p>
                     </div>
-                    <div class="col col-50">
+                    <div class="col col-60">
                         <p><span ng-bind="job.customer.name"></span></p>
-                        <textarea wrap="hard" ng-model="job.customer.address" rows="4" readonly="true" style="border-style:none;background-color: #fff;">
-                        </textarea>
-                        <!-- <p><span ng-bind="job.customer.address"></span></p> -->
-
+                        <!--textarea wrap="hard" ng-model="" rows="4" readonly="true" style="border-style:none;background-color: #fff;">
+                        </textarea-->
+                        <p><span ng-bind="job.customer.address" style="    white-space: normal;"></span></p>
                     </div>
                 </div>
                 <i class="icon ion-android-arrow-dropleft"></i>

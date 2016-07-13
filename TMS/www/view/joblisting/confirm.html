@@ -34,7 +34,10 @@
                 <div>
                     <canvas id='signatureCanvas' width="323px" height="140px" style="border: 1px solid black;" ng-show="signature==null"></canvas>
                     <img ng-src='{{signature}}' ng-show="signature!=null" />
-                    <a class="button icon-left ion-android-refresh button-clear button-dark" ng-click="clearCanvas()">Clear</a>
+
+                    <a class="button  icon-left iconfont ion-android-refresh button-clear button-positive" ng-click="clearCanvas()">Clear</a>
+
+                      <!-- <a class="button  icon-left ion-android-refresh button-clear button-dark" ng-click="clearCanvas()">Clear</a> -->
                     <!-- <a class="button icon-left ion-android-done button-clear button-dark" ng-click="saveCanvas()" ng-show="signature==null">Save</a> -->
                 </div>
             </div>

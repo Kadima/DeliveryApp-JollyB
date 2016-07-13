@@ -1,23 +1,9 @@
 'use strict';
-app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams', '$ionicPopup', '$timeout', '$cordovaToast', '$cordovaFile', '$cordovaAppVersion', 'ApiService', 'SqlService', '$ionicPlatform', '$cordovaSQLite', '$rootScope',
-    function (ENV, $scope, $http, $state, $stateParams, $ionicPopup, $timeout, $cordovaToast, $cordovaFile, $cordovaAppVersion, ApiService, SqlService, $ionicPlatform, $cordovaSQLite, $rootScope) {
+app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams', '$ionicPopup', '$timeout', '$cordovaToast', '$cordovaFile', '$cordovaAppVersion', 'ApiService', 'SqlService', '$ionicPlatform', '$cordovaSQLite', '$rootScope', 'PopupService',
+    function (ENV, $scope, $http, $state, $stateParams, $ionicPopup, $timeout, $cordovaToast, $cordovaFile, $cordovaAppVersion, ApiService, SqlService, $ionicPlatform, $cordovaSQLite, $rootScope, PopupService) {
         var alertPopup = null;
-        var alertPopupTitle = '';
         $scope.logininfo = {
             strDriverId: ''
-        };
-        var showPopup = function (title, type, callback) {
-            if (alertPopup !== null) {
-                alertPopup.close();
-                alertPopup = null;
-            }
-            alertPopup = $ionicPopup.alert({
-                title: title,
-                okType: 'button-' + type
-            });
-            alertPopup.then(function (res) {
-                if (typeof (callback) == 'function') callback(res);
-            });
         };
         $scope.funcLogin = function (blnDemo) {
             if (blnDemo) {
@@ -37,7 +23,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                 });
             } else {
                 if ($scope.logininfo.strDriverId === '') {
-                    showPopup('Please Enter Driver ID.', 'assertive');
+                    PopupService.Alert(null, 'Please Enter Driver ID.');
                 } else {
                     var objUri = ApiService.Uri(ENV.apiMap.login.check).addSearch('DriverCode', $scope.logininfo.strDriverId);
                     ApiService.Get(objUri, true).then(function success(result) {
@@ -63,7 +49,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                             });
                             $rootScope.$broadcast('login');
                         } else {
-                            showPopup('Invalid Driver ID.', 'assertive', function (res) {});
+                            PopupService.Alert(null, 'Invalid Driver ID.', '');
                         }
                     });
                 }
@@ -87,7 +73,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
         });
         $ionicPlatform.ready(function () {
             // var strSql = 'SELECT * FROM Users';
-            SqlService.Select('Users','*').then(function (res) {
+            SqlService.Select('Users', '*').then(function (res) {
                     if (res.rows.length > 0 && is.not.undefined(res.rows.item(0).uid)) {
                         var value = res.rows.item(0).uid;
                         $rootScope.$broadcast('login');

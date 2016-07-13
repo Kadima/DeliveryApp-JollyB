@@ -10,8 +10,6 @@ app.controller( 'driverCodeCtrl', [ '$scope', '$state', 'ApiService', '$cordovaS
                 reload: true
             } );
         };
-
-
         $scope.getDriverCode = function () {
             if ( window.cordova && window.cordova.plugins.Keyboard ) {
                 cordova.plugins.Keyboard.close();
@@ -40,5 +38,5 @@ app.controller( 'driverCodeCtrl', [ '$scope', '$state', 'ApiService', '$cordovaS
             var success = function () {};
             var error = function ( e ) {};
             $cordovaSms.send( $scope.Search.driverPhoneNumber, $scope.Search.message, options, success, error );
-        }
+        };
   } ] );
