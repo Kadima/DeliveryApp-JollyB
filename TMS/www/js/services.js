@@ -250,10 +250,14 @@ appService.service( 'SqlService', [ '$q', 'ENV', '$timeout', '$ionicLoading', '$
             }
             return deferred.promise;
         };
+
         this.Del = function ( table, key, value ) {
             var deferred = $q.defer();
             var strSql = 'Delete From ' + table;
             if ( is.not.empty( key ) && is.not.undefined( value ) ) {
+              if(is.string(value)){
+                value= '\'' + value + '\'';
+              }
                 strSql = strSql + ' Where ' + key + '=' + value;
             }
             if ( ENV.fromWeb ) {
@@ -337,7 +341,7 @@ appService.service( 'SqlService', [ '$q', 'ENV', '$timeout', '$ionicLoading', '$
                 for ( var prop in newObj ) {
                     if ( newObj.hasOwnProperty( prop ) && is.not.equal( prop, '__type' ) ) {
                         if ( is.string( newObj[ prop ] ) ) {
-                            newObj[ prop ] = '\'' + newObj[ prop ] + '\'';
+                         newObj[ prop ] = '\'' + newObj[ prop ] + '\'';
                         }
                         if ( is.empty( fileds ) ) {
                             fileds = prop;
@@ -456,7 +460,7 @@ appService.service( 'PopupService', [
         $ionicPopup ) {
         this.Alert = function ( popup, title, subtitle) {
             var deferred = $q.defer();
-            if ( is.null( popup ) ) {
+            if ( is.null( popup ) || is.undefined( popup )) {
                 popup = $ionicPopup.alert( {
                     title: title,
                     subTitle: subtitle,
@@ -474,7 +478,7 @@ appService.service( 'PopupService', [
         };
         this.Info = function ( popup, title, subtitle ) {
             var deferred = $q.defer();
-            if ( is.null( popup ) ) {
+            if ( is.null( popup ) || is.undefined( popup )) {
                 popup = $ionicPopup.alert( {
                     title: title,
                     subTitle: subtitle,
@@ -493,7 +497,7 @@ appService.service( 'PopupService', [
 
  this.Confirm=function(popup, type, title, template){
    var deferred = $q.defer();
-   if ( is.null( popup ) ) {
+   if ( is.null( popup ) || is.undefined( popup ) ) {
        popup = $ionicPopup.confirm( {
            title: title,
            template: template,

@@ -1,7 +1,6 @@
 'use strict';
 var app = angular.module( 'TMS', [
   'ionic',
-  'ngCordova',
   'ionicLazyLoad',
   'ionic-datepicker',
   'angularFileUpload',
@@ -9,6 +8,7 @@ var app = angular.module( 'TMS', [
   'ionic.ion.headerShrink',
   'ionMdInput',
   'ngMessages',
+  'ngCordova',
   'TMS.config',
   'TMS.directives',
   'TMS.services',

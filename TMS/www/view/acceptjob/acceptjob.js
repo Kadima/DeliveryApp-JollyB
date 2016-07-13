@@ -33,7 +33,8 @@ app.controller('AcceptJobCtrl', ['ENV', '$scope', '$state', '$ionicPopup', '$cor
           return csbk1;
         }
         var showList = function () {
-          SqlService.Select( 'Csbk1', '*' ).then(function(results){
+          var strSqlFilter="DriverCode='"+sessionStorage.getItem('strDriverId').toString()+"'";
+          SqlService.Select( 'Csbk1', '*' ,strSqlFilter).then(function(results){
             for (var i = 0; i < results.rows.length; i++) {
               var csbk1 = getObjCsbk1(results.rows.item(i));
               dataResults = dataResults.concat(csbk1);
@@ -73,11 +74,13 @@ app.controller('AcceptJobCtrl', ['ENV', '$scope', '$state', '$ionicPopup', '$cor
                 }
             }
         };
+
         $scope.deleteCsbk1 = function (index, job) {
             SqlService.Del('Csbk1', 'BookingNo', job.bookingNo).then(function (result) {
                 $scope.jobs.splice(index, 1);
             });
         };
+
         $scope.returnMain = function () {
             $state.go('index.main', {}, {
                 reload: true

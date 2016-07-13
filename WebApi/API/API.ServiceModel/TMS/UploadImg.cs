@@ -73,7 +73,7 @@ namespace WebApi.ServiceModel.TMS
                         {
                             byte[] arr = Convert.FromBase64String(base64s[1]);
                             using (MemoryStream ms = new MemoryStream(arr))
-                            {                                
+                            {
                                 Bitmap bmp = new Bitmap(ms);
                                 bmp.Save(resultFile, System.Drawing.Imaging.ImageFormat.Png);
                                 //bmp.Save(txtFileName + ".bmp", ImageFormat.Bmp);
@@ -81,6 +81,13 @@ namespace WebApi.ServiceModel.TMS
                                 //bmp.Save(txtFileName + ".png", ImageFormat.Png);
                                 i = 0;
                             }
+                        }
+                    }
+                    else {
+                        using (FileStream file = File.Create(resultFile))
+                        {                         
+                            request.RequestStream.Copy(file);
+                            i = 0;
                         }
                     }
                     if (i.Equals(0))

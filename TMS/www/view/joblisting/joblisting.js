@@ -51,8 +51,9 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
             });
         };
         getBookingNo();
+
         $scope.deleteCsbk1 = function (index, job) {
-            SqlService.Del('Csbk1', 'BookingNo', job.bookingNo).then(function (result) {
+            SqlService.Del('Csbk1', 'BookingNo', job.bookingno).then(function (result) {
                 $scope.jobs.splice(index, 1);
             });
         };
@@ -156,27 +157,24 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             };
             try {
                 $cordovaCamera.getPicture(options).then(function (imageUri) {
-                    var url = ENV.api + '/api/tms/upload/img?BookingNo=' + $scope.Detail.csbk1.BookingNo;
-                    // var url = ApiService.Uri('/api/tms/upload/img').addSearch('BookingNo', $scope.Detail.BookingNo);
+                    // var url = ENV.api + '/api/tms/upload/img?BookingNo=' + $scope.Detail.csbk1.BookingNo;
+                    var url = 'http://www.sysfreight.net:8081/apis/tms/jollyb' + '/api/tms/upload/img?BookingNo=' + $scope.Detail.csbk1.BookingNo;
                     var filePath = imageUri,
                         trustHosts = true,
                         options = {
                             fileName: moment().format('YYYY-MM-DD-HH-mm-ss').toString() + '.jpg'
                         };
-                    // $cordovaFileTransfer.upload(url, filePath, options, trustHosts)
-                    //     .then(function (result) {
-                    //         $ionicLoading.hide();
-                    //         PopupService.Info(null, 'Upload Successfully');
-                    //     }, function (err) {
-                    //         $ionicLoading.hide();
-                    //         console.error(err);
-                    //         PopupService.Alert(null, err.message);
-                    //     }, function (progress) {});
-                    // }, function (err) {
-                    //     $ionicLoading.hide();
-                    // });
+                    $cordovaFileTransfer.upload(url, filePath, options, trustHosts)
+                        .then(function (result) {
+                            $ionicLoading.hide();
+                            PopupService.Info(null, 'Upload Successfully');
+                        }, function (err) {
+                            $ionicLoading.hide();
+                            console.error(err);
+                            PopupService.Alert(null, err.message);
+                        }, function (progress) {});
+                }, function (err) {
                     $ionicLoading.hide();
-                    PopupService.Info(null, ' Successfully');
                 });
             } catch (e) {
                 $ionicLoading.hide();
@@ -208,7 +206,6 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
 
                     } else {
                         if (is.not.empty($scope.Detail.csbk1.BookingNo)) {
-                            console.log('aaaa');
                             var objUri = ApiService.Uri('/api/tms/csbk2').addSearch('BookingNo', $scope.Detail.csbk1.BookingNo);
                             ApiService.Get(objUri, true).then(function success(result) {
                                 var results = result.data.results;
@@ -317,8 +314,8 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             };
             var objUri = ApiService.Uri('/api/tms/upload/img').addSearch('BookingNo', $scope.Detail.csbk1.BookingNo);
             ApiService.Post(objUri, jsonData, true).then(function success(result) {
-                PopupService.Info(null, 'Upload Successfully', '').then(function(){
-                  $scope.closeModal();
+                PopupService.Info(null, 'Upload Successfully', '').then(function () {
+                    $scope.closeModal();
                 });
             });
         };
@@ -664,12 +661,14 @@ app.controller('UploadCtrl', ['ENV', '$scope', '$state', '$stateParams', '$ionic
                 BookingNo: $stateParams.BookingNo,
             }, {});
         };
+
+
         var uploader = $scope.uploader = new FileUploader({
-            url: ENV.api + '/api/tms/upload/img?BookingNo=' + $scope.Detail.BookingNo
-
+            //  url: ENV.api + '/api/tms/upload/img?BookingNo=' + $scope.Detail.BookingNo
+            url: 'http://www.sysfreight.net:8081/apis/tms/jollyb' + '/api/tms/upload/img?BookingNo=' + $scope.Detail.BookingNo
         });
-
         uploader.onSuccessItem = function (fileItem, response, status, headers) {
+            console.info('onSuccessItem', fileItem, response, status, headers);
             PopupService.Info(null, 'Upload Successfully', '').then(function (res) {
                 $scope.returnDoc();
             });
