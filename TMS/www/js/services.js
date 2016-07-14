@@ -43,6 +43,13 @@ appService.service( 'ApiService', [
             }
             folder = parts.path;
         };
+        this.Url=function(uri){
+          if(is.object(uri)){
+            return uri.normalizeProtocol().normalizeHostname().normalizePort().normalizeSearch().toString();
+          }else {
+            return '';
+          }
+        };
         this.Uri = function ( path ) {
             if ( is.empty( parts ) ) {
                 this.Init();

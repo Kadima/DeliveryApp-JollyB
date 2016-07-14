@@ -157,8 +157,10 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             };
             try {
                 $cordovaCamera.getPicture(options).then(function (imageUri) {
+                  var uri = ApiService.Uri('/api/tms/upload/img');
+                    uri.addSearch('BookingNo', $scope.Detail.csbk1.BookingNo);
                     // var url = ENV.api + '/api/tms/upload/img?BookingNo=' + $scope.Detail.csbk1.BookingNo;
-                    var url = 'http://www.sysfreight.net:8081/apis/tms/jollyb' + '/api/tms/upload/img?BookingNo=' + $scope.Detail.csbk1.BookingNo;
+                    var url = ApiService.Url(uri);
                     var filePath = imageUri,
                         trustHosts = true,
                         options = {
@@ -661,11 +663,11 @@ app.controller('UploadCtrl', ['ENV', '$scope', '$state', '$stateParams', '$ionic
                 BookingNo: $stateParams.BookingNo,
             }, {});
         };
-
-
+        var uri = ApiService.Uri('/api/tms/upload/img');
+        uri.addSearch('BookingNo',$scope.Detail.BookingNo);
         var uploader = $scope.uploader = new FileUploader({
-            //  url: ENV.api + '/api/tms/upload/img?BookingNo=' + $scope.Detail.BookingNo
-            url: 'http://www.sysfreight.net:8081/apis/tms/jollyb' + '/api/tms/upload/img?BookingNo=' + $scope.Detail.BookingNo
+            url: ApiService.Url(uri)
+            //url: 'http://www.sysfreight.net:8081/apis/tms/jollyb' + '/api/tms/upload/img?BookingNo=' + $scope.Detail.BookingNo
         });
         uploader.onSuccessItem = function (fileItem, response, status, headers) {
             console.info('onSuccessItem', fileItem, response, status, headers);
