@@ -22,17 +22,6 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
               deleteLogin();
           }
       });
-
-            // var confirmPopup = $ionicPopup.confirm( {
-            //     title: 'Log Out',
-            //     template: 'Are you sure to log out?'
-            // } );
-            // confirmPopup.then( function ( res ) {
-            //     if ( res ) {
-            //         deleteLogin();
-            //     }
-            // } );
-
          };
         $scope.gotoSetting = function () {
             $state.go( 'index.setting', {}, {
@@ -41,8 +30,8 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
         };
         $scope.gotoUpdate = function () {
             if ( !ENV.fromWeb ) {
-                var url = ENV.website + '/' + ENV.updateFile;
-                $http.get( url )
+                  var url = ApiService.Url(ApiService.Uri( false, '/' + ENV.updateFile));
+                $http.get(url)
                     .success( function ( res ) {
                         var serverAppVersion = res.version;
                         $cordovaAppVersion.getVersionNumber().then( function ( version ) {
@@ -74,7 +63,7 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
         var writeFile = function ( path, file, data ) {
             $cordovaFile.writeFile( path, file, data, true )
                 .then( function ( success ) {
-                    ApiService.Init();
+                    ApiService.Init(true);
                 }, function ( error ) {
                     $cordovaToast.showShortBottom( error );
                     console.error( error );
@@ -112,7 +101,7 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
                                             if ( is.not.empty( arWebPort[ 1 ] ) ) {
                                                 ENV.port = arWebPort[ 1 ];
                                             }
-                                            ApiService.Init();
+                                            ApiService.Init(true);
                                         } else {
                                             $cordovaFile.removeFile( path, file )
                                                 .then( function ( success ) {
@@ -132,7 +121,7 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
                     } );
             } else {
                 ENV.ssl = 'https:' === document.location.protocol ? true : false;
-                ApiService.Init();
+                ApiService.Init(true);
             }
         } );
   }

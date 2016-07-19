@@ -10,7 +10,9 @@ using System.Collections;
 namespace WebApi.ServiceModel.TMS
 {
     [Route("/tms/slcr1/complete", "Get")] //
-   public  class Slcr : IReturn<CommonResponse>
+    [Route("/tms/slcr1/checkStatus", "Get")]  //checkStatus?BookingNo=
+    [Route("/tms/slcr1/update", "Get")]
+    public  class Slcr : IReturn<CommonResponse>
     {
         public string ReceiptNo { get; set; }
         public string JobNo { get; set; }
@@ -198,7 +200,24 @@ namespace WebApi.ServiceModel.TMS
             return CheckUpdateFieldLength1;
        
         }
-           
 
+        //public int CheckStatus(Slcr request) {
+        //    int Result = -1;
+        //    try
+        //    {
+        //        using (var db = DbConnectionFactory.OpenDbConnection())
+        //        {
+        //            string strSql = "";
+        //            if ( ! string.IsNullOrEmpty(request.BookingNo))
+        //            {
+        //                 strSql = "Select count(*) From slcr1 Where BookingNo='" + request.BookingNo + "'";
+        //            }                
+        //            Result = db.Scalar<int>(strSql);
+        //        }
+        //    }
+        //    catch { throw; }
+        //    return Result;
+
+        //}
     }
 }

@@ -13,7 +13,7 @@ app.controller( 'SettingCtrl', [ 'ENV', '$scope', '$state', '$ionicHistory', '$i
         var writeFile = function ( path, file, data ) {
             $cordovaFile.writeFile( path, file, data, true )
                 .then( function ( success ) {
-                    ApiService.Init();
+                    ApiService.Init(true);
                     $scope.return();
                 }, function ( error ) {
                     $cordovaToast.showShortBottom( error );
@@ -54,7 +54,7 @@ app.controller( 'SettingCtrl', [ 'ENV', '$scope', '$state', '$ionicHistory', '$i
                 var file = ENV.rootPath + '/' + ENV.configFile;
                 writeFile( path, file, data );
             } else {
-                ApiService.Init();
+                ApiService.Init(true);
                 $scope.return();
             }
         };
@@ -67,13 +67,13 @@ app.controller( 'SettingCtrl', [ 'ENV', '$scope', '$state', '$ionicHistory', '$i
                 var file = ENV.rootPath + '/' + ENV.configFile;
                 $cordovaFile.removeFile( path, file )
                     .then( function ( success ) {
-                        ApiService.Init();
+                        ApiService.Init(true);
                         $scope.save();
                     }, function ( error ) {
                         $cordovaToast.showShortBottom( error );
                     } );
             }else{
-                ApiService.Init();
+                ApiService.Init(true);
             }
         };
   }

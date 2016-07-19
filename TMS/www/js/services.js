@@ -23,8 +23,8 @@ appService.service( 'ApiService', [
         PopupService ) {
         var parts = {},
             folder = '';
-        this.Init = function () {
-            var url = ENV.api;
+        this.Init = function (blnApi ) {
+            var url = blnApi ? ENV.api: ENV.website;
             var urls = url.split( '/' );
             parts = {
                 protocol: null,
@@ -50,12 +50,16 @@ appService.service( 'ApiService', [
             return '';
           }
         };
-        this.Uri = function ( path ) {
+        this.Uri = function (blnApi, path ) {
             if ( is.empty( parts ) ) {
-                this.Init();
+                this.Init(blnApi);
             }
+            var url = blnApi ? ENV.api: ENV.website;
+            var urls = url.split( '/' );
+            parts.hostname = urls[ 0 ];
+            parts.path = url.replace( urls[ 0 ], '' );
             parts.path = folder + path;
-            return new URI( URI.build( parts ) );
+            return new URI( URI.build( ((parts)) ) );
         };
         this.Post = function ( uri, requestData, blnShowLoad, popup ) {
             if ( blnShowLoad ) {
@@ -140,6 +144,7 @@ appService.service( 'ApiService', [
 appService.service( 'SqlService', [ '$q', 'ENV', '$timeout', '$ionicLoading', '$cordovaSQLite', '$cordovaToast', 'TABLE_DB','PopupService',
     function ( $q, ENV, $timeout, $ionicLoading, $cordovaSQLite, $cordovaToast, TABLE_DB,  PopupService ) {
         var db_websql,db_sqlite;
+
         this.Init = function ( ) {
             var deferred = $q.defer();
             if ( ENV.fromWeb ) {
@@ -170,7 +175,7 @@ appService.service( 'SqlService', [ '$q', 'ENV', '$timeout', '$ionicLoading', '$
                 }
             }
             return deferred.promise;
-        }
+        };
 
         this.Drop = function ( table ) {
             var deferred = $q.defer();

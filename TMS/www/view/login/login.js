@@ -25,7 +25,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                 if ($scope.logininfo.strDriverId === '') {
                     PopupService.Alert(null, 'Please Enter Driver ID.');
                 } else {
-                    var objUri = ApiService.Uri(ENV.apiMap.login.check).addSearch('DriverCode', $scope.logininfo.strDriverId);
+                    var objUri = ApiService.Uri(true,ENV.apiMap.login.check).addSearch('DriverCode', $scope.logininfo.strDriverId);
                     ApiService.Get(objUri, true).then(function success(result) {
                         var results = result.data.results;
                         if (is.not.empty(results)) {
@@ -35,10 +35,6 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                             sessionStorage.setItem('strDriverName', results[0].DriverName);
                             sessionStorage.setItem('strVehicleNo', results[0].VehicleNo);
 
-                            // if ( !ENV.fromWeb ) {
-                            //     $cordovaSQLite.execute( db, 'INSERT INTO Users (uid) VALUES (?)', [ $scope.logininfo.strDriverId ] )
-                            //         .then( function ( result ) {}, function ( error ) {} )
-                            // }
                             var objUser = {
                                 uid: $scope.logininfo.strDriverId
                             };

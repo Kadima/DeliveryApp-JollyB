@@ -32,46 +32,67 @@ app.run( [ 'ENV', '$ionicPlatform', '$rootScope', '$state', '$location', '$timeo
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+
             SqlService.Init().then(function(res){
-              SqlService.Create('Csbk1', TABLE_DB.Csbk1).then(function(res){
+          //     if ( ENV.fromWeb ) {
+          //   var  db_websql = window.openDatabase(
+          //        ENV.websql.name,
+          //         ENV.websql.version,
+          //         ENV.websql.displayName,
+          //         ENV.websql.estimatedSize
+          //     );
+          //     function dbError(tx, error) {}
+          //     var   strSql='Drop Table If Exists Csbk1';
+          //     db_websql.transaction(function(tx) {
+          //   tx.executeSql(strSql, [], null, dbError);
+          // });
+          //   var   strSql1='Drop Table If Exists Csbk2';
+          //   db_websql.transaction(function(tx) {
+          //   tx.executeSql(strSql1, [], null, dbError);
+          //   });
+          // var   strSql3='Drop Table If Exists CsbkDetail';
+          // db_websql.transaction(function(tx) {
+          // tx.executeSql(strSql3, [], null, dbError);
+          // });
+          // var   strSql4='Drop Table If Exists Users';
+          // db_websql.transaction(function(tx) {
+          // tx.executeSql(strSql4, [], null, dbError);
+          // });
+          // }
+              //
 
-              });
-              SqlService.Create('Users', TABLE_DB.Users).then(function(res){
-
-              });
-              SqlService.Create('Csbk2', TABLE_DB.Csbk2).then(function(res){
-
-              });
-              SqlService.Create('CsbkDetail', TABLE_DB.CsbkDetail).then(function(res){
-
-              });
-            });
-
-
-                // cur.Drop('Csbk1').then(function(res){
-                //     cur.Create('Csbk1', TABLE_DB.Csbk1).then(function(res){
-                //
-                //     });
-                // });
-                // cur.Drop('Users').then(function(res){
-                //     cur.Create('Users', TABLE_DB.Users).then(function(res){
-                //
-                //     });
-                // });
-                // cur.Drop('Csbk2').then(function(res){
-                //     cur.Create('Csbk2', TABLE_DB.Csbk2).then(function(res){
-                //
-                //     });
-                // });
-                // cur.Drop('CsbkDetail').then(function(res){
-                //     cur.Create('CsbkDetail', TABLE_DB.CsbkDetail).then(function(res){
-                //
-                //     });
-                // });
+ if ( ENV.fromWeb ) {
+              SqlService.Drop('Csbk1').then(function(res){
+                    SqlService.Create('Csbk1', TABLE_DB.Csbk1).then(function(res){
+                    });
+                });
+                SqlService.Drop('Users').then(function(res){
+                    SqlService.Create('Users', TABLE_DB.Users).then(function(res){
+                    });
+                });
+                SqlService.Drop('Csbk2').then(function(res){
+                    SqlService.Create('Csbk2', TABLE_DB.Csbk2).then(function(res){
+                    });
+                });
+                SqlService.Drop('CsbkDetail').then(function(res){
+                    SqlService.Create('CsbkDetail', TABLE_DB.CsbkDetail).then(function(res){
+                    });
+                });
+}else{
+  SqlService.Create('Csbk1', TABLE_DB.Csbk1).then(function(res){
+ });
+ SqlService.Create('Csbk2', TABLE_DB.Csbk2).then(function(res){
+ });
+ SqlService.Create('Users', TABLE_DB.Users).then(function(res){
+ });
+ SqlService.Create('CsbkDetail', TABLE_DB.CsbkDetail).then(function(res){
+ });
+}
                 //$cordovaSQLite.execute( db, 'CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTOINCREMENT, uid TEXT)' );
                 //$cordovaSQLite.execute( db, 'CREATE TABLE IF NOT EXISTS Csbk1(TrxNo INTEGER,BookingNo TEXT, JobNo TEXT, StatusCode TEXT,BookingCustomerCode TEXT,Pcs INTEGER,CollectionTimeStart TEXT,CollectionTimeEnd TEXT,PostalCode TEXT,BusinessPartyCode TEXT,BusinessPartyName TEXT,Address1 TEXT,Address2 TEXT,Address3 TEXT,Address4 TEXT,CompletedFlag TEXT,TimeFrom TEXT,TimeTo TEXT,ColTimeFrom TEXT,ColTimeTo TEXT,CompletedDate TEXT,DriverId TEXT,CollectedAmt INTEGER,ScanDate TEXT,DriverCode TEXT)' );
                 //$cordovaSQLite.execute( db, 'CREATE TABLE IF NOT EXISTS Csbk2 (TrxNo INTEGER,LineItemNo INTEGER, BoxCode TEXT,Pcs INTEGER,UnitRate TEXT,CollectedPcs INTEGER,AddQty INTEGER)' );
                 //$cordovaSQLite.execute( db, 'CREATE TABLE IF NOT EXISTS CsbkDetail (BookingNo TEXT, JobNo TEXT,TrxNo INTEGER,StatusCode TEXT,ItemNo INTEGER,DepositAmt INTEGER,DiscountAmt  INTEGER,CollectedAmt  INTEGER,CompletedFlag TEXT,PaidAmt INTEGER)' );
+ });
 
         } );
         $ionicPlatform.registerBackButtonAction( function ( e ) {

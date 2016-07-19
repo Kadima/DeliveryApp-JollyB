@@ -60,8 +60,11 @@
     </ion-content>
     <ion-footer-bar class="bar-positive ">
         <div class="button-bar">
-            <button class="button icon ion-android-done" ng-click="confirm()">
+            <button class="button icon ion-android-done" ng-click="confirm()"   ng-show="Detail.CompletedFlag!='Y'" >
                 &nbsp;OK
+            </button>
+            <button class="button icon ion-android-done" ng-click="confirm()"   ng-show="Detail.CompletedFlag=='Y'" >
+                &nbsp;Update
             </button>
             <button class="button icon ion-arrow-return-right" ng-click="returnDetail()">
                 &nbsp;Cancel

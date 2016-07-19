@@ -48,7 +48,9 @@ appFactory.factory( 'TABLE_DB', function () {
             PaidAmt : 'INT',
             ItemNo: 'INT',
             ScanDate: 'TEXT',
+            TempBookingNo:'TEXT',
             DriverCode: 'TEXT'
+
         },
           Csbk2:{
             TrxNo: 'INT',
