@@ -58,7 +58,7 @@ appService.service( 'ApiService', [
             var urls = url.split( '/' );
             parts.hostname = urls[ 0 ];
             parts.path = url.replace( urls[ 0 ], '' );
-            parts.path = folder + path;
+            parts.path = blnApi ? folder + path:parts.path+ path;
             return new URI( URI.build( ((parts)) ) );
         };
         this.Post = function ( uri, requestData, blnShowLoad, popup ) {

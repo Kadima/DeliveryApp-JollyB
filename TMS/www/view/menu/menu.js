@@ -6,6 +6,17 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
         $scope.Status = {
             Login: false
         };
+        var showQRcode = function(){
+        var qrcode = new QRCode(document.getElementById('qrcode'), {
+            // text: ENV.website + '/' + ENV.apkName + '.apk',
+            text:ApiService.Url(ApiService.Uri( false, '/' + ENV.apkName + '.apk')),
+            width: 174,
+            height: 174,
+            colorDark : '#000000',
+            colorLight : '#ffffff',
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    };
         var deleteLogin = function () {
           SqlService.Del('Users','','')
           .then(function (res)
@@ -29,6 +40,7 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
             } );
         };
         $scope.gotoUpdate = function () {
+  var url = ApiService.Url(ApiService.Uri( false, '/' + ENV.updateFile));
             if ( !ENV.fromWeb ) {
                   var url = ApiService.Url(ApiService.Uri( false, '/' + ENV.updateFile));
                 $http.get(url)
@@ -64,6 +76,7 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
             $cordovaFile.writeFile( path, file, data, true )
                 .then( function ( success ) {
                     ApiService.Init(true);
+                      showQRcode();
                 }, function ( error ) {
                     $cordovaToast.showShortBottom( error );
                     console.error( error );
@@ -102,6 +115,7 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
                                                 ENV.port = arWebPort[ 1 ];
                                             }
                                             ApiService.Init(true);
+                                              showQRcode();
                                         } else {
                                             $cordovaFile.removeFile( path, file )
                                                 .then( function ( success ) {
@@ -122,6 +136,7 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
             } else {
                 ENV.ssl = 'https:' === document.location.protocol ? true : false;
                 ApiService.Init(true);
+                  showQRcode();
             }
         } );
   }

@@ -4,6 +4,6 @@ xcopy /y/e/s www %target%\www
 pause 
 copy /y index.html %target%
 copy /y update.json %target%
-copy /y TMS-JollyB.apk %target%\TMS-JollyB.apk
-del TMS-JollyB.apk /f /q
+copy /y TMS.apk %target%\TMS.apk
+del TMS.apk /f /q
 pause 
