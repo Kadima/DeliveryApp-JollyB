@@ -49,7 +49,8 @@ appFactory.factory( 'TABLE_DB', function () {
             ItemNo: 'INT',
             ScanDate: 'TEXT',
             TempBookingNo:'TEXT',
-            DriverCode: 'TEXT'
+            DriverCode: 'TEXT',
+            Base64:'TEXT'
 
         },
           Csbk2:{
@@ -62,7 +63,10 @@ appFactory.factory( 'TABLE_DB', function () {
             AddQty: 'INT'
           },
           Users:{
-            uid:'TEXT'
+            DriverId:'TEXT',
+            DriverCode: 'TEXT',
+            DriverName:'TEXT',
+            VehicleNo:'TEXT'
           },
         CsbkDetail: {
           BookingNo: 'TEXT',
@@ -74,8 +78,46 @@ appFactory.factory( 'TABLE_DB', function () {
           DiscountAmt:  'INT',
           CollectedAmt:  'INT',
           CompletedFlag: 'TEXT',
-          PaidAmt: 'INT'
-        }
+          PaidAmt: 'INT',
+          Rcbp1PhoneNumber:'TEXT'
+        },
+        Slcr1:{
+          BookingNo:'TEXT',
+          ReceiptAmt:'INT'
+        },
+        TemCsbk1:{
+          TrxNo: 'INT',
+          BookingNo: 'TEXT',
+          JobNo: 'TEXT',
+          StatusCode: 'TEXT',
+          BookingCustomerCode: 'TEXT',
+          Pcs: 'INT',
+          CollectionTimeStart: 'TEXT',
+          CollectionTimeEnd: 'TEXT',
+          PostalCode: 'TEXT',
+          BusinessPartyCode: 'TEXT',
+          BusinessPartyName: 'TEXT',
+          Address1: 'TEXT',
+          Address2: 'TEXT',
+          Address3: 'TEXT',
+          Address4: 'TEXT',
+          CompletedFlag: 'TEXT',
+          TimeFrom: 'TEXT',
+          TimeTo: 'TEXT',
+          ColTimeFrom: 'TEXT',
+          ColTimeTo: 'TEXT',
+          CompletedDate: 'TEXT',
+          DriverId: 'TEXT',
+          CollectedAmt: 'INT',
+          DepositAmt: 'INT',
+          DiscountAmt: 'INT',
+          PaidAmt : 'INT',
+          ItemNo: 'INT',
+          ScanDate: 'TEXT',
+          TempBookingNo:'TEXT',
+          DriverCode: 'TEXT',
+          Base64:'TEXT'
+  },
 
     };
     return TABLE_DB;

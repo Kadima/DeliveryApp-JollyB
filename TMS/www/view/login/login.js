@@ -34,9 +34,11 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                             sessionStorage.setItem('strDriverCode', $scope.logininfo.strDriverId);
                             sessionStorage.setItem('strDriverName', results[0].DriverName);
                             sessionStorage.setItem('strVehicleNo', results[0].VehicleNo);
-
                             var objUser = {
-                                uid: $scope.logininfo.strDriverId
+                                DriverId: $scope.logininfo.strDriverId,
+                                DriverCode:  $scope.logininfo.strDriverId,
+                                DriverName: results[0].DriverName,
+                                VehicleNo:results[0].VehicleNo
                             };
 
                             SqlService.Insert('Users', objUser).then(function (res) {});
@@ -70,8 +72,8 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
         $ionicPlatform.ready(function () {
             // var strSql = 'SELECT * FROM Users';
             SqlService.Select('Users', '*').then(function (res) {
-                    if (res.rows.length > 0 && is.not.undefined(res.rows.item(0).uid)) {
-                        var value = res.rows.item(0).uid;
+                    if (res.rows.length > 0 && is.not.undefined(res.rows.item(0).DriverId)) {
+                        var value = res.rows.item(0).DriverId;
                         $rootScope.$broadcast('login');
                         sessionStorage.clear();
                         sessionStorage.setItem('strDriverId', value);

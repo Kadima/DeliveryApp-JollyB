@@ -10,7 +10,6 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
         };
         var getBookingNo = function () {
             $ionicPlatform.ready(function () {
-                // var strSql = "select * from Csbk1 where DriverCode='" + sessionStorage.getItem("strDriverId") + "'";
                 var strSqlFilter = "DriverCode='" + sessionStorage.getItem("strDriverId") + "'";
                 SqlService.Select('Csbk1', '*', strSqlFilter).then(function (results) {
                     for (var i = 0; i < results.rows.length; i++) {
@@ -190,6 +189,8 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                 SqlService.Select('Csbk2 left join CsbkDetail on Csbk2.TrxNo = CsbkDetail.TrxNo', '*', strSqlFilter).then(function (results) {
                     if (results.rows.length > 0) {
                         $scope.Detail.csbk1 = results.rows.item(0);
+                        console.log($scope.Detail.csbk1.Rcbp1PhoneNumber);
+                        console.log('$scope.Detail.csbk1.Rcbp1PhoneNumber');
                         for (var i = 0; i < results.rows.length; i++) {
                             var csbk2s = {
                                 TrxNo: results.rows.item(i).TrxNo,
@@ -208,54 +209,54 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                         checkStatusCode($scope.Detail.csbk1.StatusCode);
 
                     } else {
-                        if (is.not.empty($scope.Detail.csbk1.BookingNo)) {
-                            var objUri = ApiService.Uri(true, '/api/tms/csbk2').addSearch('BookingNo', $scope.Detail.csbk1.BookingNo);
-                            ApiService.Get(objUri, true).then(function success(result) {
-                                var results = result.data.results;
-                                if (is.not.empty(results)) {
-                                    $scope.Detail.csbk1 = results.csbk1;
-                                    $scope.Detail.csbk2s = results.csbk2s;
-                                }
-                                for (var intI = 0; intI < $scope.Detail.csbk2s.length; intI++) {
-                                    $scope.Detail.AllBalance = $scope.Detail.AllBalance + $scope.Detail.csbk2s[intI].Pcs * $scope.Detail.csbk2s[intI].UnitRate;
-                                }
-                                $scope.Detail.CashAmt = $scope.Detail.AllBalance - $scope.Detail.csbk1.DiscountAmt - $scope.Detail.csbk1.PaidAmt;
-                                $scope.Detail.AllBalance = $scope.Detail.AllBalance - $scope.Detail.csbk1.DepositAmt - $scope.Detail.csbk1.DiscountAmt - $scope.Detail.csbk1.PaidAmt;
-                                if ($scope.Detail.csbk1.CollectedAmt <= 0) {
-                                    $scope.Detail.csbk1.CollectedAmt = $scope.Detail.AllBalance;
-                                }
-                                for (var i = 0; i < $scope.Detail.csbk2s.length; i++) {
-                                    var obj = {
-                                        TrxNo: $scope.Detail.csbk2s[i].TrxNo,
-                                        LineItemNo: $scope.Detail.csbk2s[i].LineItemNo,
-                                        BoxCode: $scope.Detail.csbk2s[i].BoxCode,
-                                        Pcs: $scope.Detail.csbk2s[i].Pcs,
-                                        UnitRate: $scope.Detail.csbk2s[i].UnitRate,
-                                        CollectedPcs: $scope.Detail.csbk2s[i].CollectedPcs,
-                                        AddQty: $scope.Detail.csbk2s[i].AddQty
-                                    };
-                                    SqlService.Insert('Csbk2', obj).then(function (res) {
-
-                                    });
-                                }
-                                var objDetail = {
-                                    BookingNo: $scope.Detail.csbk1.BookingNo,
-                                    JobNo: $scope.Detail.csbk1.JobNo,
-                                    TrxNo: $scope.Detail.csbk1.TrxNo,
-                                    StatusCode: $scope.Detail.csbk1.StatusCode,
-                                    ItemNo: $scope.Detail.csbk1.ItemNo,
-                                    DepositAmt: $scope.Detail.csbk1.DepositAmt,
-                                    DiscountAmt: $scope.Detail.csbk1.DiscountAmt,
-                                    CollectedAmt: $scope.Detail.csbk1.CollectedAmt,
-                                    CompletedFlag: $scope.Detail.csbk1.CompletedFlag,
-                                    PaidAmt: $scope.Detail.csbk1.PaidAmt
-                                };
-                                SqlService.Insert('CsbkDetail', objDetail).then(function (res) {
-
-                                });
-                                checkStatusCode($scope.Detail.csbk1.StatusCode);
-                            });
-                        }
+                        // if (is.not.empty($scope.Detail.csbk1.BookingNo)) {
+                        //     var objUri = ApiService.Uri(true, '/api/tms/csbk2').addSearch('BookingNo', $scope.Detail.csbk1.BookingNo);
+                        //     ApiService.Get(objUri, true).then(function success(result) {
+                        //         var results = result.data.results;
+                        //         if (is.not.empty(results)) {
+                        //             $scope.Detail.csbk1 = results.csbk1;
+                        //             $scope.Detail.csbk2s = results.csbk2s;
+                        //         }
+                        //         for (var intI = 0; intI < $scope.Detail.csbk2s.length; intI++) {
+                        //             $scope.Detail.AllBalance = $scope.Detail.AllBalance + $scope.Detail.csbk2s[intI].Pcs * $scope.Detail.csbk2s[intI].UnitRate;
+                        //         }
+                        //         $scope.Detail.CashAmt = $scope.Detail.AllBalance - $scope.Detail.csbk1.DiscountAmt - $scope.Detail.csbk1.PaidAmt;
+                        //         $scope.Detail.AllBalance = $scope.Detail.AllBalance - $scope.Detail.csbk1.DepositAmt - $scope.Detail.csbk1.DiscountAmt - $scope.Detail.csbk1.PaidAmt;
+                        //         if ($scope.Detail.csbk1.CollectedAmt <= 0) {
+                        //             $scope.Detail.csbk1.CollectedAmt = $scope.Detail.AllBalance;
+                        //         }
+                        //         for (var i = 0; i < $scope.Detail.csbk2s.length; i++) {
+                        //             var obj = {
+                        //                 TrxNo: $scope.Detail.csbk2s[i].TrxNo,
+                        //                 LineItemNo: $scope.Detail.csbk2s[i].LineItemNo,
+                        //                 BoxCode: $scope.Detail.csbk2s[i].BoxCode,
+                        //                 Pcs: $scope.Detail.csbk2s[i].Pcs,
+                        //                 UnitRate: $scope.Detail.csbk2s[i].UnitRate,
+                        //                 CollectedPcs: $scope.Detail.csbk2s[i].CollectedPcs,
+                        //                 AddQty: $scope.Detail.csbk2s[i].AddQty
+                        //             };
+                        //             SqlService.Insert('Csbk2', obj).then(function (res) {
+                        //
+                        //             });
+                        //         }
+                        //         var objDetail = {
+                        //             BookingNo: $scope.Detail.csbk1.BookingNo,
+                        //             JobNo: $scope.Detail.csbk1.JobNo,
+                        //             TrxNo: $scope.Detail.csbk1.TrxNo,
+                        //             StatusCode: $scope.Detail.csbk1.StatusCode,
+                        //             ItemNo: $scope.Detail.csbk1.ItemNo,
+                        //             DepositAmt: $scope.Detail.csbk1.DepositAmt,
+                        //             DiscountAmt: $scope.Detail.csbk1.DiscountAmt,
+                        //             CollectedAmt: $scope.Detail.csbk1.CollectedAmt,
+                        //             CompletedFlag: $scope.Detail.csbk1.CompletedFlag,
+                        //             PaidAmt: $scope.Detail.csbk1.PaidAmt
+                        //         };
+                        //         SqlService.Insert('CsbkDetail', objDetail).then(function (res) {
+                        //
+                        //         });
+                        //         checkStatusCode($scope.Detail.csbk1.StatusCode);
+                        //     });
+                        // }
                     }
                 });
             });
@@ -492,16 +493,6 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             }
         };
 
-        var objUri = ApiService.Uri(true, '/api/tms/rcbp1').addSearch('BookingNo', $scope.Detail.csbk1.BookingNo);
-        ApiService.Get(objUri, true).then(function success(result) {
-            var results = result.data.results;
-            if (is.not.empty(results)) {
-                $scope.Detail.PhoneNumber = "tel:" + results[0].Handphone1;
-                if (is.equal(results[0].Handphone1, '')) {
-                    $scope.Detail.PhoneNumber = "tel:" + results[0].Telephone;
-                }
-            }
-        });
         $('#iCollectedAmt').on('keydown', function (e) {
             if (e.which === 9 || e.which === 13) {
                 $scope.gotoConfirm();
@@ -512,8 +503,8 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
     }
 ]);
 
-app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParams', 'ApiService', '$ionicPopup', '$ionicPlatform', '$cordovaSQLite', '$ionicLoading', 'SqlService', 'PopupService',
-    function (ENV, $scope, $state, $stateParams, ApiService, $ionicPopup, $ionicPlatform, $cordovaSQLite, $ionicLoading, SqlService, PopupService) {
+app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParams', 'ApiService', '$ionicPopup', '$ionicPlatform', '$cordovaSQLite', '$cordovaNetwork', '$ionicLoading', 'SqlService', 'PopupService',
+    function (ENV, $scope, $state, $stateParams, ApiService, $ionicPopup, $ionicPlatform, $cordovaSQLite, $cordovaNetwork, $ionicLoading, SqlService, PopupService) {
         var canvas = document.getElementById('signatureCanvas'),
             signaturePad = new SignaturePad(canvas),
             strEemptyBase64 = '';
@@ -528,11 +519,12 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
             CashAmt: $stateParams.Collected,
             Packages: 0,
             csbk2s: [],
-            csbk1:{},
+            csbk1: {},
             CompletedFlag: '',
-            Csbk2ReusltLength: 0
+            Csbk2ReusltLength: 0,
+            VehicleNo: '',
+            Base64: '',
         };
-
         var showCsbk1 = function () {
             SqlService.Select('Csbk1', '*', "BookingNo='" + $scope.Detail.BookingNo + "'").then(
                 function (results) {
@@ -543,7 +535,25 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
                 },
                 function (error) {}
             );
-
+        };
+        if (!ENV.fromWeb) {
+            if (is.not.equal($cordovaNetwork.getNetwork(), 'wifi')) {
+                ENV.wifi = false;
+            } else {
+                ENV.wifi = true;
+            }
+        }
+        var showUser = function () {
+            var strSqlFilter = "DriverCode='" + sessionStorage.getItem('strDriverId').toString() + "'";
+            SqlService.Select('Users', '*', strSqlFilter).then(
+                function (results) {
+                    if (results.rows.length > 0) {
+                        var Users = results.rows.item(0);
+                        $scope.Detail.VehicleNo = Users.VehicleNo;
+                    }
+                },
+                function (error) {}
+            );
         };
         $ionicPlatform.ready(function () {
             SqlService.Select('Csbk2 left join CsbkDetail on Csbk2.TrxNo = CsbkDetail.TrxNo', '*', "BookingNo='" + $scope.Detail.BookingNo + "'").then(function (results) {
@@ -567,23 +577,34 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
             );
 
         });
-
         function resizeCanvas() {
             var ratio = window.devicePixelRatio || 1;
             canvas.width = window.innerWidth - 50;
             canvas.height = screen.height / 3;
-        };
-
+        }
         var getSignature = function () {
-            var objUri = ApiService.Uri(true, '/api/tms/csbk1/attach').addSearch('BookingNo', $stateParams.BookingNo);
-            // var strUri = '/api/tms/csbk1/attach?BookingNo=' + $stateParams.BookingNo;
-            ApiService.Get(objUri, true).then(function success(result) {
-                if (is.not.undefined(result.data.results)) {
-                    if (is.not.equal(strEemptyBase64, result.data.results)) {
-                        $scope.signature = 'data:image/png;base64,' + result.data.results;
-                    }
-                }
-            });
+            SqlService.Select('Csbk1', '*', "BookingNo='" + $scope.Detail.BookingNo + "'").then(
+                function (results) {
+                    if (results.rows.length > 0) {
+                        var Csbk1_acc = results.rows.item(0);
+                        $scope.Detail.ScanDate = Csbk1_acc.ScanDate;
+                        $scope.Detail.Base64 = Csbk1_acc.Base64;
+                        if (Csbk1_acc.Base64 !== null && is.not.empty(Csbk1_acc.Base64)) {
+                            if (is.not.equal(strEemptyBase64, $scope.Detail.Base64)) {
+                                $scope.signature = 'data:image/png;base64,' + $scope.Detail.Base64;
+                            }
+                        }
+                    } else {}
+                },
+                function (error) {}
+            );
+            // var objUri = ApiService.Uri(true, '/api/tms/csbk1/attach').addSearch('BookingNo', $stateParams.BookingNo);
+            // ApiService.Get(objUri, true).then(function success(result) {
+            //     if (is.not.undefined(result.data.results)) {
+            //             $scope.signature = 'data:image/png;base64,' + result.data.results;
+            //         }
+            //     }
+            // });
         };
         $scope.returnList = function () {
             $state.go('jobListingList', {}, {});
@@ -605,85 +626,106 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
                 $scope.signature = sigImg;
             }
         };
-
         $scope.confirm = function () {
             $scope.saveCanvas();
+
             if ($scope.Detail.Amount > 0 && is.null($scope.signature)) {
                 PopupService.Alert(null, 'Please Signature', '');
             } else {
+                if (is.not.null($scope.signature)) {
+                    var signature = $scope.signature.split(',')[1];
+                }
                 var Csbk1Filter = " BookingNo='" + $scope.Detail.BookingNo + "'";
                 var Csbk1 = {
                     CompletedFlag: 'Y',
                     CompletedDate: moment(new Date()).format('YYYYMMDD'),
                     DriverId: sessionStorage.getItem("strDriverId"),
-                    CollectedAmt: $scope.Detail.Amount
+                    CollectedAmt: $scope.Detail.Amount,
+                    Base64: signature
                 };
                 var CsbkDetail = {
                     CompletedFlag: 'Y',
                 };
                 SqlService.Update('Csbk1', Csbk1, Csbk1Filter).then(function (res) {});
                 SqlService.Update('CsbkDetail', CsbkDetail, Csbk1Filter).then(function (res) {});
-                if ($scope.Detail.CompletedFlag !== 'Y') {
-                    var objUri = ApiService.Uri(true, '/api/tms/csbk1/confirm');
-                    objUri.addSearch('BookingNo', $scope.Detail.BookingNo);
-                    objUri.addSearch('JobNo', $scope.Detail.JobNo);
-                    objUri.addSearch('CashAmt', $scope.Detail.CashAmt);
-                    objUri.addSearch('UpdateBy', sessionStorage.getItem("strDriverId").toString());
-                    objUri.addSearch('CollectBy', sessionStorage.getItem("strVehicleNo").toString());
-                    objUri.addSearch('Amount', $scope.Detail.Amount);
-                    objUri.addSearch('ActualCollectionDate', $scope.Detail.ScanDate);
-                    ApiService.Get(objUri, true).then(function success(result) {
-                    //In the insert slcr1 logic updated paidAmt
+                if (!ENV.wifi) {
+                    if ($scope.Detail.CompletedFlag !== 'Y') {
+                        var objUri = ApiService.Uri(true, '/api/tms/csbk1/confirm');
+                        objUri.addSearch('BookingNo', $scope.Detail.BookingNo);
+                        objUri.addSearch('JobNo', $scope.Detail.JobNo);
+                        objUri.addSearch('CashAmt', $scope.Detail.CashAmt);
+                        objUri.addSearch('UpdateBy', sessionStorage.getItem("strDriverId").toString());
+                        objUri.addSearch('CollectBy', $scope.Detail.VehicleNo);
+                        objUri.addSearch('Amount', $scope.Detail.Amount);
+                        objUri.addSearch('ActualCollectionDate', $scope.Detail.ScanDate);
+                        ApiService.Get(objUri, true).then(function success(result) {
+                            //In the insert slcr1 logic updated paidAmt
 
-                      // var objUri = ApiService.Uri(true, '/api/tms/csbk2').addSearch('BookingNo', $scope.Detail.BookingNo);
-                      // ApiService.Get(objUri, true).then(function success(result) {
-                      //     var results = result.data.results;
-                      //     if (is.not.empty(results)) {
-                      //         $scope.Detail.csbk1 = results.csbk1;
-                      //         var CsbkDetail = {
-                      //             PaidAmt:   $scope.Detail.csbk1.PaidAmt,
-                      //         };
-                      //         SqlService.Update('CsbkDetail', CsbkDetail, Csbk1Filter).then(function (res) {});
-                      //       }
-                      //     });
+                            var objUri = ApiService.Uri(true, '/api/tms/csbk2').addSearch('BookingNo', $scope.Detail.BookingNo);
+                            ApiService.Get(objUri, true).then(function success(result) {
+                                var results = result.data.results;
+                                if (is.not.empty(results)) {
+                                    $scope.Detail.csbk1 = results.csbk1;
+                                    var CsbkDetail = {
+                                        PaidAmt: $scope.Detail.csbk1.PaidAmt,
+                                    };
+                                    SqlService.Update('CsbkDetail', CsbkDetail, Csbk1Filter).then(function (res) {});
+                                }
+                            });
 
-                  //In the insert slcr1 logic updated paidAmt
+                            //In the insert slcr1 logic updated paidAmt
+                        });
+                    } else {
+                        var objUri = ApiService.Uri(true, '/api/tms/csbk1/update');
+                        objUri.addSearch('BookingNo', $scope.Detail.BookingNo);
+                        objUri.addSearch('Amount', $scope.Detail.Amount);
+                        objUri.addSearch('ActualCollectionDate', $scope.Detail.ScanDate);
+                        ApiService.Get(objUri, false).then(function success(result) {});
+                    }
+                    var jsonData = {
+                        'Base64': $scope.signature,
+                        'FileName': 'signature.Png'
+                    };
+                    if ($scope.signature !== null) {
+                        var objUri = ApiService.Uri(true, '/api/tms/upload/img').addSearch('BookingNo', $scope.Detail.BookingNo);
+                        ApiService.Post(objUri, jsonData, true).then(function success(result) {});
+                    }
+                    // updae ActualCollectionDate
+                    var strSql = "SELECT * FROM Csbk1  where BookingNo='" + $scope.Detail.BookingNo + "'";
+                    // $cordovaSQLite.execute(db, "SELECT * FROM Csbk1  where BookingNo='" + $scope.Detail.BookingNo + "'")
+                    for (var intI = 0; intI < $scope.Detail.Csbk2ReusltLength; intI++) {
+                        var objUri = ApiService.Uri(true, '/api/tms/csbk2/update');
+                        objUri.addSearch('CollectedPcs', $scope.Detail.csbk2s[intI].CollectedPcs);
+                        objUri.addSearch('AddQty', $scope.Detail.csbk2s[intI].AddQty);
+                        objUri.addSearch('TrxNo', $scope.Detail.csbk2s[intI].TrxNo);
+                        objUri.addSearch('LineItemNo', $scope.Detail.csbk2s[intI].LineItemNo);
+                        ApiService.Get(objUri, false).then(function success(result) {});
+                    }
+
+                    PopupService.Info(null, 'Confirm Success', '').then(function (res) {
+                        $scope.returnList();
                     });
                 } else {
-                    var objUri = ApiService.Uri(true, '/api/tms/csbk1/update');
-                    objUri.addSearch('BookingNo', $scope.Detail.BookingNo);
-                    objUri.addSearch('Amount', $scope.Detail.Amount);
-                    objUri.addSearch('ActualCollectionDate', $scope.Detail.ScanDate);
-                    ApiService.Get(objUri, false).then(function success(result) {});
+                    SqlService.Select('Csbk1', '*', "BookingNo='" + $scope.Detail.BookingNo + "'").then(
+                        function (results) {
+                            if (results.rows.length > 0) {
+                                var objTemCsbk1 = results.rows.item(0);
+                                SqlService.Insert('TemCsbk1', objTemCsbk1).then(function (res) {});
+                            } else {}
+                        },
+                        function (error) {}
+                    );
+                    PopupService.Info(null, 'Confirm Success', 'The current state of no wifi, please in a wifi to DailyCompleted confirm').then(function (res) {
+                        $scope.returnList();
+                    });
                 }
-                var jsonData = {
-                    'Base64': $scope.signature,
-                    'FileName': 'signature.Png'
-                };
-
-                var objUri = ApiService.Uri(true, '/api/tms/upload/img').addSearch('BookingNo', $scope.Detail.BookingNo);
-                ApiService.Post(objUri, jsonData, true).then(function success(result) {});
-                // updae ActualCollectionDate
-                var strSql = "SELECT * FROM Csbk1  where BookingNo='" + $scope.Detail.BookingNo + "'";
-                // $cordovaSQLite.execute(db, "SELECT * FROM Csbk1  where BookingNo='" + $scope.Detail.BookingNo + "'")
-                for (var intI = 0; intI < $scope.Detail.Csbk2ReusltLength; intI++) {
-                    var objUri = ApiService.Uri(true, '/api/tms/csbk2/update');
-                    objUri.addSearch('CollectedPcs', $scope.Detail.csbk2s[intI].CollectedPcs);
-                    objUri.addSearch('AddQty', $scope.Detail.csbk2s[intI].AddQty);
-                    objUri.addSearch('TrxNo', $scope.Detail.csbk2s[intI].TrxNo);
-                    objUri.addSearch('LineItemNo', $scope.Detail.csbk2s[intI].LineItemNo);
-                    ApiService.Get(objUri, false).then(function success(result) {});
-                }
-
-                PopupService.Info(null, 'Confirm Success', '').then(function (res) {
-                    $scope.returnList();
-                });
 
             }
         };
         getSignature();
         resizeCanvas();
         showCsbk1();
+        showUser();
         strEemptyBase64 = signaturePad.toDataURL();
 
     }

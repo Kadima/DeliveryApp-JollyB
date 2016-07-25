@@ -78,6 +78,14 @@ app.run( [ 'ENV', '$ionicPlatform', '$rootScope', '$state', '$location', '$timeo
                     SqlService.Create('CsbkDetail', TABLE_DB.CsbkDetail).then(function(res){
                     });
                 });
+                SqlService.Drop('Slcr1').then(function(res){
+                    SqlService.Create('Slcr1', TABLE_DB.Slcr1).then(function(res){
+                    });
+                });
+                SqlService.Drop('TemCsbk1').then(function(res){
+                    SqlService.Create('TemCsbk1', TABLE_DB.TemCsbk1).then(function(res){
+                    });
+                });
 }else{
   SqlService.Create('Csbk1', TABLE_DB.Csbk1).then(function(res){
  });
@@ -86,6 +94,10 @@ app.run( [ 'ENV', '$ionicPlatform', '$rootScope', '$state', '$location', '$timeo
  SqlService.Create('Users', TABLE_DB.Users).then(function(res){
  });
  SqlService.Create('CsbkDetail', TABLE_DB.CsbkDetail).then(function(res){
+ });
+ SqlService.Create('Slcr1', TABLE_DB.Slcr1).then(function(res){
+ });
+ SqlService.Create('TemCsbk1', TABLE_DB.TemCsbk1).then(function(res){
  });
 }
                 //$cordovaSQLite.execute( db, 'CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTOINCREMENT, uid TEXT)' );
