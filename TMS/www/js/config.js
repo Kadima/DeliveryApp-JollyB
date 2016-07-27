@@ -32,7 +32,7 @@ appConfig.constant( 'ENV', {
     updateFile: 'update.json',
     rootPath: 'JollyB',
     configFile: 'config.txt',
-    version: '1.0.2.32',
+    version: '1.0.2.33',
     apiMap: {
         login: {
             check : '/api/tms/login/check'

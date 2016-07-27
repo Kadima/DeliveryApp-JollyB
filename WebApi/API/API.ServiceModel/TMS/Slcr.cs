@@ -12,6 +12,7 @@ namespace WebApi.ServiceModel.TMS
     [Route("/tms/slcr1/complete", "Get")] //
     [Route("/tms/slcr1/checkStatus", "Get")]  //checkStatus?BookingNo=
     [Route("/tms/slcr1/update", "Get")]
+    [Route("/tms/slcr1", "Get")]      //slcr1?BookingNo=
     public  class Slcr : IReturn<CommonResponse>
     {
         public string ReceiptNo { get; set; }
@@ -219,5 +220,32 @@ namespace WebApi.ServiceModel.TMS
         //    return Result;
 
         //}
+
+        public List<Slcr1> Get_slcr1(Slcr request)
+        {
+            List<Slcr1> Result = null;
+            try
+            {
+                using (var db = DbConnectionFactory.OpenDbConnection("TMS"))
+                {
+                   
+                    string strWhere = "";
+                    if (!string.IsNullOrEmpty(request.BookingNo))
+                    {
+
+                        strWhere = "Where BookingNo='" + request.BookingNo + "'";
+
+                    }
+                  var strSQL = "select sum(ReceiptAmt) as ReceiptAmt,BookingNo from  slcr1 " + strWhere+"group by BookingNo";
+                    Result = db.Select<Slcr1>(strSQL);
+
+                }
+
+            }
+            catch { throw; }
+            return Result;
+
+        }
+
     }
 }

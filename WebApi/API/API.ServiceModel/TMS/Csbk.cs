@@ -318,8 +318,7 @@ namespace WebApi.ServiceModel.TMS
                                   "     when MONTH(GETDATE()) = '11' then(select  Mth11NextNo from sanm2 where TrxNo = (Select TrxNo From Sanm1 Where NumberType = 'Slcr') and YEAR = (select year(getdate())))" +
                                  " when MONTH(GETDATE()) = '12' then(select  Mth12NextNo from sanm2 where TrxNo = (Select TrxNo From Sanm1 Where NumberType = 'Slcr') and YEAR = (select year(getdate())))" +
                                  "end as 'NextNo' ";
-                    NextNo = db.Scalar<string>(strSQL);
-                    NextNo = CheckUpdateFieldLength(NextNo);
+                    NextNo = db.Scalar<string>(strSQL);                
                     if (NextNo.Length > 0)
                     {
                         db.Insert(
@@ -357,6 +356,7 @@ namespace WebApi.ServiceModel.TMS
                                  " when MONTH(GETDATE()) = '12' then 12" +
                                  " end as 'NextNo' ";
                         intMonth = db.Scalar<int>(strSQL);
+                        NextNo = CheckUpdateFieldLength(NextNo);
                         if (intMonth == 1)
                         {
                             db.Update("sanm2", " Mth01NextNo = '" + NextNo + "'", "trxno =(Select TrxNo From Sanm1 Where NumberType = 'Slcr') and YEAR = (select year(getdate()))");

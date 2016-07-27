@@ -50,7 +50,9 @@ appFactory.factory( 'TABLE_DB', function () {
             ScanDate: 'TEXT',
             TempBookingNo:'TEXT',
             DriverCode: 'TEXT',
-            Base64:'TEXT'
+            Base64:'TEXT',
+            CashAmt:'INT',
+            Csbk2CollectedPcs:'TEXT'
 
         },
           Csbk2:{
@@ -116,7 +118,10 @@ appFactory.factory( 'TABLE_DB', function () {
           ScanDate: 'TEXT',
           TempBookingNo:'TEXT',
           DriverCode: 'TEXT',
-          Base64:'TEXT'
+          Base64:'TEXT',
+          CashAmt:'INT',
+          Csbk2CollectedPcs:'TEXT'
+
   },
 
     };

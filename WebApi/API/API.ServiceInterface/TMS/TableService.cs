@@ -61,7 +61,10 @@ namespace WebApi.ServiceInterface.TMS
                 {
                     ecr.data.results = slcr_logic.Complete_Slcr1(request);
                 }
-     
+                else if (uri.IndexOf("/tms/slcr1") > 0)
+                {
+                    ecr.data.results = slcr_logic.Get_slcr1(request);
+                }
                 ecr.meta.code = 200;
                 ecr.meta.message = "OK";
             }

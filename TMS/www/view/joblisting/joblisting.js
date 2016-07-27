@@ -27,6 +27,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                             DLVReturntime = Csbk1_acc.TimeFrom + '-' + Csbk1_acc.TimeTo;
                         }
                         var jobs = [{
+                           TrxNo: Csbk1_acc.TrxNo,
                             bookingno: Csbk1_acc.BookingNo,
                             JobNo: Csbk1_acc.JobNo,
                             action: is.equal(Csbk1_acc.StatusCode, 'DLV') ? 'Deliver' : 'Collect',
@@ -52,8 +53,14 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
         getBookingNo();
 
         $scope.deleteCsbk1 = function (index, job) {
-            SqlService.Del('Csbk1', 'BookingNo', job.bookingno).then(function (result) {
-                $scope.jobs.splice(index, 1);
+            SqlService.Del('Csbk2', 'TrxNo', job.TrxNo).then(function (result) {
+                SqlService.Del('CsbkDetail', 'BookingNo', job.bookingno).then(function (result) {
+                    SqlService.Del('Slcr1', 'BookingNo', job.bookingno).then(function (result) {
+                        SqlService.Del('Csbk1', 'BookingNo', job.bookingno).then(function (result) {
+                            $scope.jobs.splice(index, 1);
+                        });
+                    });
+                });
             });
         };
         $scope.showFilterBar = function () {
@@ -189,8 +196,6 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                 SqlService.Select('Csbk2 left join CsbkDetail on Csbk2.TrxNo = CsbkDetail.TrxNo', '*', strSqlFilter).then(function (results) {
                     if (results.rows.length > 0) {
                         $scope.Detail.csbk1 = results.rows.item(0);
-                        console.log($scope.Detail.csbk1.Rcbp1PhoneNumber);
-                        console.log('$scope.Detail.csbk1.Rcbp1PhoneNumber');
                         for (var i = 0; i < results.rows.length; i++) {
                             var csbk2s = {
                                 TrxNo: results.rows.item(i).TrxNo,
@@ -204,7 +209,7 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                             $scope.Detail.csbk2s.push(csbk2s);
                             $scope.Detail.AllBalance = $scope.Detail.AllBalance + $scope.Detail.csbk2s[i].Pcs * $scope.Detail.csbk2s[i].UnitRate;
                         }
-                        $scope.Detail.CashAmt = $scope.Detail.AllBalance - $scope.Detail.csbk1.DiscountAmt - $scope.Detail.csbk1.PaidAmt;
+                        // $scope.Detail.CashAmt = $scope.Detail.AllBalance - $scope.Detail.csbk1.DiscountAmt - $scope.Detail.csbk1.PaidAmt;
                         $scope.Detail.AllBalance = $scope.Detail.AllBalance - $scope.Detail.csbk1.DepositAmt - $scope.Detail.csbk1.DiscountAmt - $scope.Detail.csbk1.PaidAmt;
                         checkStatusCode($scope.Detail.csbk1.StatusCode);
 
@@ -390,6 +395,13 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
         };
         $scope.gotoConfirm = function () {
             if (is.equal($scope.Detail.csbk1.StatusCode, 'DLV')) {
+                if (!ENV.fromWeb) {
+                    if (is.not.equal($cordovaNetwork.getNetwork(), 'wifi')) {
+                        ENV.wifi = false;
+                    } else {
+                        ENV.wifi = true;
+                    }
+                }
                 $ionicPlatform.ready(function () {
                     var strSql = '';
                     for (var i = 0; i < $scope.Detail.csbk2s.length; i++) {
@@ -418,32 +430,40 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                     SqlService.Update('CsbkDetail', CsbkDetail, Csbk1Filter).then(function (res) {});
                     // select ActualDeliveryDate
                     // strSql = "SELECT * FROM Csbk1  where BookingNo='" + $scope.Detail.csbk1.BookingNo + "'";
-                    SqlService.Select('Csbk1', '*', "BookingNo='" + $scope.Detail.csbk1.BookingNo + "'").then(
-                        function (results) {
-                            if (results.rows.length > 0) {
-                                var Csbk1_acc = results.rows.item(0);
-                                $scope.Detail.ScanDate = Csbk1_acc.ScanDate;
-                                var objUri = ApiService.Uri(true, '/api/tms/csbk1/update');
-                                objUri.addSearch('BookingNo', $scope.Detail.csbk1.BookingNo);
-                                objUri.addSearch('Amount', $scope.Detail.csbk1.CollectedAmt);
-                                objUri.addSearch('ActualDeliveryDate', $scope.Detail.ScanDate);
-                                ApiService.Get(objUri, false).then(function success(result) {
-                                    for (var intI = 0; intI < $scope.Detail.csbk2s.length; intI++) {
-                                        var objUri = ApiService.Uri(true, '/api/tms/csbk2/update');
-                                        objUri.addSearch('CollectedPcs', $scope.Detail.csbk2s[intI].CollectedPcs);
-                                        objUri.addSearch('AddQty', $scope.Detail.csbk2s[intI].AddQty);
-                                        objUri.addSearch('TrxNo', $scope.Detail.csbk2s[intI].TrxNo);
-                                        objUri.addSearch('LineItemNo', $scope.Detail.csbk2s[intI].LineItemNo);
-                                        ApiService.Get(objUri, false).then(function success(result) {
-                                            $state.go('jobListingList', {}, {});
-                                        });
-                                    }
-                                });
-                            } else {}
-                        },
-                        function (error) {}
-                    );
+                    if (ENV.wifi) {
+                        SqlService.Select('Csbk1', '*', "BookingNo='" + $scope.Detail.csbk1.BookingNo + "'").then(
+                            function (results) {
+                                if (results.rows.length > 0) {
+                                    var Csbk1_acc = results.rows.item(0);
+                                    $scope.Detail.ScanDate = Csbk1_acc.ScanDate;
 
+                                    var objUri = ApiService.Uri(true, '/api/tms/csbk1/update');
+                                    objUri.addSearch('BookingNo', $scope.Detail.csbk1.BookingNo);
+                                    objUri.addSearch('Amount', $scope.Detail.csbk1.CollectedAmt);
+                                    objUri.addSearch('ActualDeliveryDate', $scope.Detail.ScanDate);
+                                    ApiService.Get(objUri, false).then(function success(result) {
+                                        for (var intI = 0; intI < $scope.Detail.csbk2s.length; intI++) {
+                                            var objUri = ApiService.Uri(true, '/api/tms/csbk2/update');
+                                            objUri.addSearch('CollectedPcs', $scope.Detail.csbk2s[intI].CollectedPcs);
+                                            objUri.addSearch('AddQty', $scope.Detail.csbk2s[intI].AddQty);
+                                            objUri.addSearch('TrxNo', $scope.Detail.csbk2s[intI].TrxNo);
+                                            objUri.addSearch('LineItemNo', $scope.Detail.csbk2s[intI].LineItemNo);
+                                            ApiService.Get(objUri, false).then(function success(result) {
+                                                $state.go('jobListingList', {}, {});
+                                            });
+                                        }
+                                    });
+                                } else {
+
+                                }
+                            },
+                            function (error) {}
+                        );
+                    } else {
+                        PopupService.Info(null, 'Confirm Success', 'The current state of no wifi, please in a wifi to DailyCompleted confirm').then(function (res) {
+                            $scope.returnList();
+                        });
+                    }
                     // objUri = ApiService.Uri( true, '/api/tms/csbk1/confirm');
                     // objUri.addSearch('BookingNo', $scope.Detail.csbk1.BookingNo);
                     // ApiService.Get(objUri, true).then(function success(result) {
@@ -476,7 +496,7 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                         'BookingNo': $scope.Detail.csbk1.BookingNo,
                         'JobNo': $stateParams.JobNo,
                         'CollectedAmt': $scope.Detail.csbk1.CollectedAmt,
-                        'Collected': $scope.Detail.CashAmt
+                        'Collected': $scope.Detail.csbk1.CollectedAmt
                     }, {
                         reload: true
                     });
@@ -577,6 +597,7 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
             );
 
         });
+
         function resizeCanvas() {
             var ratio = window.devicePixelRatio || 1;
             canvas.width = window.innerWidth - 50;
@@ -641,6 +662,8 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
                     CompletedDate: moment(new Date()).format('YYYYMMDD'),
                     DriverId: sessionStorage.getItem("strDriverId"),
                     CollectedAmt: $scope.Detail.Amount,
+                    CashAmt: $scope.Detail.CashAmt,
+                    Csbk2CollectedPcs: $scope.Detail.Packages,
                     Base64: signature
                 };
                 var CsbkDetail = {
@@ -648,7 +671,7 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
                 };
                 SqlService.Update('Csbk1', Csbk1, Csbk1Filter).then(function (res) {});
                 SqlService.Update('CsbkDetail', CsbkDetail, Csbk1Filter).then(function (res) {});
-                if (!ENV.wifi) {
+                if (ENV.wifi) {
                     if ($scope.Detail.CompletedFlag !== 'Y') {
                         var objUri = ApiService.Uri(true, '/api/tms/csbk1/confirm');
                         objUri.addSearch('BookingNo', $scope.Detail.BookingNo);
